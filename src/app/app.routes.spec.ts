@@ -17,7 +17,7 @@ describe('app routes', () => {
 		TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
 	});
 
-	for (const url of ['/', '/profile', '/test']) {
+	for (const url of ['/', '/profile', '/test', '/login', '/register']) {
 		it(`лениво загружает ${url}`, async () => {
 			const router = TestBed.inject(Router);
 

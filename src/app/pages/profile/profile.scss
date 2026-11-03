@@ -1,5 +1,52 @@
-.profile__text {
+.profile__list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	margin: 0;
+}
+
+.profile__row {
+	display: grid;
+	grid-template-columns: minmax(8rem, 12rem) 1fr;
+	gap: 1rem;
+}
+
+.profile__term {
 	margin: 0;
 	font-size: 0.9rem;
 	color: var(--cavern-muted);
+}
+
+.profile__value {
+	margin: 0;
+	font-size: 0.9rem;
+}
+
+.profile__text {
+	margin: 0 0 1rem;
+	font-size: 0.9rem;
+	color: var(--cavern-muted);
+}
+
+.profile__actions {
+	display: flex;
+	gap: 0.75rem;
+}
+
+.profile__link {
+	display: inline-block;
+	padding: 0.5rem 0.9rem;
+	border: 1px solid var(--cavern-border);
+	border-radius: 0.5rem;
+	font-size: 0.9rem;
+	color: var(--cavern-text);
+	text-decoration: none;
+	transition:
+		background-color 0.15s ease,
+		border-color 0.15s ease;
+
+	&:hover {
+		border-color: var(--cavern-accent);
+		background: var(--cavern-surface-hover);
+	}
 }

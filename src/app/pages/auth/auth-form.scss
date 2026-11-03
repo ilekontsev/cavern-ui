@@ -1,0 +1,82 @@
+:host {
+	display: block;
+}
+
+.auth {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	max-width: 24rem;
+}
+
+.auth__form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.auth__field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+.auth__label {
+	font-size: 0.9rem;
+	font-weight: 500;
+}
+
+.auth__input {
+	padding: 0.55rem 0.7rem;
+	border: 1px solid var(--cavern-border);
+	border-radius: 0.5rem;
+	background: var(--cavern-surface);
+	color: var(--cavern-text);
+	font: inherit;
+
+	&:focus {
+		outline: 2px solid var(--cavern-accent);
+		outline-offset: 1px;
+	}
+}
+
+.auth__errors {
+	margin: 0;
+	padding-left: 1.1rem;
+	font-size: 0.8rem;
+	color: var(--cavern-danger);
+}
+
+.auth__error {
+	margin: 0;
+	font-size: 0.85rem;
+	color: var(--cavern-danger);
+}
+
+.auth__submit {
+	align-self: flex-start;
+	padding: 0.55rem 1rem;
+	border: 1px solid var(--cavern-accent);
+	border-radius: 0.5rem;
+	background: var(--cavern-accent);
+	color: #ffffff;
+	font: inherit;
+	font-weight: 500;
+	cursor: pointer;
+
+	&:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+}
+
+.auth__hint,
+.auth__footer {
+	margin: 0;
+	font-size: 0.85rem;
+	color: var(--cavern-muted);
+}
+
+.auth__link {
+	color: var(--cavern-accent);
+}

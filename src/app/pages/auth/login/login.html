@@ -1,0 +1,57 @@
+<app-page title="Вход" subtitle="Авторизуйтесь, чтобы открыть профиль.">
+	<div class="auth">
+		<form class="auth__form" [formRoot]="loginForm">
+			<div class="auth__field">
+				<label class="auth__label" for="login-name">Логин</label>
+				<input
+					class="auth__input"
+					id="login-name"
+					type="text"
+					autocomplete="username"
+					[formField]="loginForm.login"
+				/>
+				@if (loginForm.login().touched() && loginForm.login().invalid()) {
+					<ul class="auth__errors">
+						@for (error of loginForm.login().errors(); track error) {
+							<li>{{ error.message }}</li>
+						}
+					</ul>
+				}
+			</div>
+
+			<div class="auth__field">
+				<label class="auth__label" for="login-password">Пароль</label>
+				<input
+					class="auth__input"
+					id="login-password"
+					type="password"
+					autocomplete="current-password"
+					[formField]="loginForm.password"
+				/>
+				@if (loginForm.password().touched() && loginForm.password().invalid()) {
+					<ul class="auth__errors">
+						@for (error of loginForm.password().errors(); track error) {
+							<li>{{ error.message }}</li>
+						}
+					</ul>
+				}
+			</div>
+
+			@for (error of loginForm().errors(); track error) {
+				<p class="auth__error">{{ error.message }}</p>
+			}
+
+			<button class="auth__submit" type="submit" [disabled]="loginForm().submitting()">
+				@if (loginForm().submitting()) {
+					Вход…
+				} @else {
+					Войти
+				}
+			</button>
+		</form>
+
+		<p class="auth__footer">
+			Нет аккаунта? <a class="auth__link" routerLink="/register">Зарегистрироваться</a>
+		</p>
+	</div>
+</app-page>

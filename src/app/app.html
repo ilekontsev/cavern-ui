@@ -15,6 +15,16 @@
 				Профиль
 			</a>
 			<a class="shell__link" routerLink="/test" routerLinkActive="shell__link--active">Тест</a>
+
+			@if (currentUser(); as user) {
+				<span class="shell__user">{{ user.login }}</span>
+				<button class="shell__logout" type="button" (click)="logout()">Выйти</button>
+			} @else {
+				<a class="shell__link" routerLink="/login" routerLinkActive="shell__link--active"> Вход </a>
+				<a class="shell__link" routerLink="/register" routerLinkActive="shell__link--active">
+					Регистрация
+				</a>
+			}
 		</nav>
 
 		<button

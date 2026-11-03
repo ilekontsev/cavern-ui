@@ -12,6 +12,7 @@
 	--cavern-text: #e6e9ef;
 	--cavern-muted: #9aa4b2;
 	--cavern-accent: #6ea8fe;
+	--cavern-danger: #ff8a80;
 }
 
 // Светлая схема — значение по умолчанию.
@@ -25,6 +26,7 @@
 	--cavern-text: #1a1d23;
 	--cavern-muted: #5b6472;
 	--cavern-accent: #2f6fed;
+	--cavern-danger: #b42318;
 }
 
 :root[data-theme='dark'] {

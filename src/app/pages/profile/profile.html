@@ -1,3 +1,32 @@
-<app-page title="Профиль" subtitle="Раздел в разработке.">
-	<p class="profile__text">Здесь будет профиль пользователя.</p>
+<app-page title="Профиль" subtitle="Данные текущего пользователя.">
+	@if (auth.currentUser(); as user) {
+		<app-card heading="Аккаунт">
+			<dl class="profile__list">
+				<div class="profile__row">
+					<dt class="profile__term">Логин</dt>
+					<dd class="profile__value">{{ user.login }}</dd>
+				</div>
+				<div class="profile__row">
+					<dt class="profile__term">Роль</dt>
+					<dd class="profile__value">{{ roleLabels[user.role] }}</dd>
+				</div>
+				<div class="profile__row">
+					<dt class="profile__term">Тип</dt>
+					<dd class="profile__value">{{ typeLabels[user.type] }}</dd>
+				</div>
+				<div class="profile__row">
+					<dt class="profile__term">Дата регистрации</dt>
+					<dd class="profile__value">{{ user.registeredAt | date: 'dd.MM.yyyy, HH:mm' }}</dd>
+				</div>
+			</dl>
+		</app-card>
+	} @else {
+		<app-card heading="Вы не авторизованы">
+			<p class="profile__text">Войдите или зарегистрируйтесь, чтобы увидеть данные профиля.</p>
+			<div class="profile__actions">
+				<a class="profile__link" routerLink="/login">Войти</a>
+				<a class="profile__link" routerLink="/register">Регистрация</a>
+			</div>
+		</app-card>
+	}
 </app-page>

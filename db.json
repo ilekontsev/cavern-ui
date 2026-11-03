@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "login": "admin",
+      "password": "adminadmin",
+      "role": "admin",
+      "type": "standard",
+      "registeredAt": "2026-11-03T21:35:52.702Z",
+      "id": "vex56Iq7l38"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
