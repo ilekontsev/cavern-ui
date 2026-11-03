@@ -1,0 +1,124 @@
+// Общие стили текстовых полей. Подключаются компонентами `input` и будущим
+// `textarea` как общий stylesheet, поэтому оформление задаётся обычными
+// селекторами `:host` и классами.
+
+:host {
+	display: block;
+	box-sizing: border-box;
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+.field__box {
+	display: flex;
+	align-items: stretch;
+	box-sizing: border-box;
+	border: 1px solid var(--cavern-border, #d8dde6);
+	border-radius: 0.5rem;
+	background: var(--cavern-surface, #ffffff);
+	transition:
+		border-color 0.15s ease,
+		box-shadow 0.15s ease;
+
+	&:focus-within {
+		border-color: var(--cavern-accent, #2f6fed);
+		box-shadow: 0 0 0 2px color-mix(in srgb, var(--cavern-accent, #2f6fed) 25%, transparent);
+	}
+}
+
+.field--invalid .field__box {
+	border-color: var(--cavern-danger, #b42318);
+
+	&:focus-within {
+		box-shadow: 0 0 0 2px color-mix(in srgb, var(--cavern-danger, #b42318) 25%, transparent);
+	}
+}
+
+// Блок с самим контролом и подписью. Слоты нужны, чтобы позже можно было
+// добавить картинку, лоадер или кнопку, не перестраивая шаблон.
+.field__main {
+	position: relative;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.field__prefix,
+.field__suffix {
+	display: flex;
+	flex: 0 0 auto;
+	align-items: center;
+	color: var(--cavern-muted, #5b6472);
+
+	&:empty {
+		display: none;
+	}
+}
+
+.field__prefix {
+	padding-left: 0.75rem;
+}
+
+.field__suffix {
+	padding-right: 0.75rem;
+}
+
+.field__label {
+	position: absolute;
+	top: 50%;
+	left: 0.75rem;
+	transform: translateY(-50%);
+	color: var(--cavern-muted, #5b6472);
+	pointer-events: none;
+	transition:
+		top 0.15s ease,
+		transform 0.15s ease,
+		color 0.15s ease;
+}
+
+// Подпись уезжает наверх, когда поле в фокусе или уже заполнено.
+.field--floated .field__label,
+.field__box:focus-within .field__label,
+.field__control:-webkit-autofill + .field__label {
+	top: 0.3rem;
+	transform: translateY(0) scale(0.78);
+	transform-origin: left top;
+}
+
+.field:not(.field--invalid) .field__box:focus-within .field__label {
+	color: var(--cavern-accent, #2f6fed);
+}
+
+.field--invalid .field__label {
+	color: var(--cavern-danger, #b42318);
+}
+
+.field__hint,
+.field__errors {
+	margin: 0;
+	font-size: 0.8rem;
+}
+
+.field__hint {
+	color: var(--cavern-muted, #5b6472);
+}
+
+.field__errors {
+	padding-left: 1.1rem;
+	color: var(--cavern-danger, #b42318);
+}
+
+// Сам контрол не рисует рамку: её и состояние фокуса держит `.field__box`.
+.field__control {
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0;
+	border: 0;
+	outline: none;
+	background: transparent;
+	color: var(--cavern-text, #1a1d23);
+	font: inherit;
+}

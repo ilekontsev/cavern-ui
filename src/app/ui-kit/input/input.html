@@ -1,0 +1,37 @@
+<div class="field" [class.field--floated]="!!value()" [class.field--invalid]="showErrors()">
+	<div class="field__box">
+		<span class="field__prefix"><ng-content select="[appInputPrefix]" /></span>
+
+		<div class="field__main">
+			<input
+				#control
+				class="field__control"
+				[id]="controlId()"
+				[type]="type()"
+				[value]="value()"
+				[attr.name]="name() ?? null"
+				[attr.autocomplete]="autocomplete() ?? null"
+				[attr.aria-invalid]="showErrors() ? 'true' : null"
+				[attr.aria-describedby]="describedBy()"
+				[required]="required()"
+				[readonly]="readonly()"
+				[disabled]="disabled()"
+				(input)="onInput($event)"
+				(blur)="onBlur()"
+			/>
+			<label class="field__label" [for]="controlId()">{{ label() }}</label>
+		</div>
+
+		<span class="field__suffix"><ng-content select="[appInputSuffix]" /></span>
+	</div>
+
+	@if (showErrors()) {
+		<ul class="field__errors" [id]="messageId()">
+			@for (error of errors(); track error) {
+				<li>{{ error.message }}</li>
+			}
+		</ul>
+	} @else if (description()) {
+		<p class="field__hint" [id]="messageId()">{{ description() }}</p>
+	}
+</div>

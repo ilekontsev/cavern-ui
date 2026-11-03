@@ -12,7 +12,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { AuthError } from '../../../core/auth/auth.models';
 import { AuthService } from '../../../core/auth/auth.service';
-import { Button, Page } from '../../../ui-kit';
+import { Button, Input, Page } from '../../../ui-kit';
 
 interface RegisterFormModel {
 	login: string;
@@ -21,7 +21,7 @@ interface RegisterFormModel {
 }
 
 @Component({
-	imports: [Button, FormField, FormRoot, Page, RouterLink],
+	imports: [Button, FormField, FormRoot, Input, Page, RouterLink],
 	selector: 'app-register',
 	styleUrl: '../auth-form.scss',
 	templateUrl: './register.html',
