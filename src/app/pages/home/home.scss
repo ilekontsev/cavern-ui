@@ -9,21 +9,3 @@
 	font-size: 0.9rem;
 	color: var(--cavern-muted);
 }
-
-.home__link {
-	display: inline-block;
-	padding: 0.5rem 0.9rem;
-	border: 1px solid var(--cavern-border);
-	border-radius: 0.5rem;
-	font-size: 0.9rem;
-	color: var(--cavern-text);
-	text-decoration: none;
-	transition:
-		background-color 0.15s ease,
-		border-color 0.15s ease;
-
-	&:hover {
-		border-color: var(--cavern-accent);
-		background: var(--cavern-surface-hover);
-	}
-}

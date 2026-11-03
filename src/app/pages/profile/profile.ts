@@ -3,10 +3,10 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { USER_ROLE_LABELS, USER_TYPE_LABELS } from '../../core/auth/auth.models';
 import { AuthService } from '../../core/auth/auth.service';
-import { Card, Page } from '../../ui-kit';
+import { Button, Card, Page } from '../../ui-kit';
 
 @Component({
-	imports: [Card, DatePipe, Page, RouterLink],
+	imports: [Button, Card, DatePipe, Page, RouterLink],
 	selector: 'app-profile',
 	styleUrl: './profile.scss',
 	templateUrl: './profile.html',

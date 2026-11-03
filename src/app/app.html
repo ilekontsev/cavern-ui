@@ -18,7 +18,9 @@
 
 			@if (currentUser(); as user) {
 				<span class="shell__user">{{ user.login }}</span>
-				<button class="shell__logout" type="button" (click)="logout()">Выйти</button>
+				<button app-button variant="neutral" size="small" type="button" (click)="logout()">
+					Выйти
+				</button>
 			} @else {
 				<a class="shell__link" routerLink="/login" routerLinkActive="shell__link--active"> Вход </a>
 				<a class="shell__link" routerLink="/register" routerLinkActive="shell__link--active">
@@ -28,7 +30,9 @@
 		</nav>
 
 		<button
-			class="shell__theme"
+			app-button
+			variant="secondary"
+			size="small"
 			type="button"
 			[attr.aria-label]="theme() === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему'"
 			[attr.title]="theme() === 'dark' ? 'Светлая тема' : 'Тёмная тема'"

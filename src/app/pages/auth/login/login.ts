@@ -3,7 +3,7 @@ import { FormField, FormRoot, form, minLength, required } from '@angular/forms/s
 import { Router, RouterLink } from '@angular/router';
 import { AuthError } from '../../../core/auth/auth.models';
 import { AuthService } from '../../../core/auth/auth.service';
-import { Page } from '../../../ui-kit';
+import { Button, Page } from '../../../ui-kit';
 
 interface LoginFormModel {
 	login: string;
@@ -11,7 +11,7 @@ interface LoginFormModel {
 }
 
 @Component({
-	imports: [FormField, FormRoot, Page, RouterLink],
+	imports: [Button, FormField, FormRoot, Page, RouterLink],
 	selector: 'app-login',
 	styleUrl: '../auth-form.scss',
 	templateUrl: './login.html',

@@ -12,7 +12,7 @@ case "$msg" in
 	Merge\ * | Revert\ * | fixup!\ * | squash!\ *) exit 0 ;;
 esac
 
-if ! printf '%s\n' "$msg" | grep -Eq '^(bug|feature|story|fix|docs|style|refactor|config)/cavern-[0-9]+\. .+'; then
+if ! printf '%s\n' "$msg" | grep -Eq '^(bug|ui-kit|feature|story|fix|docs|style|refactor|config)/cavern-[0-9]+\. .+'; then
 	cat >&2 <<'EOF'
 
 x Неверный формат сообщения коммита.

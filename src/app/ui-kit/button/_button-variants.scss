@@ -1,0 +1,59 @@
+// Варианты оформления кнопки.
+
+// Основное действие.
+:host([data-variant='primary']) {
+	border-color: var(--cavern-accent);
+	background: var(--cavern-accent);
+	color: var(--cavern-bg);
+
+	&:hover:not(:disabled, [aria-disabled='true']) {
+		border-color: color-mix(in srgb, var(--cavern-accent) 85%, var(--cavern-text));
+		background: color-mix(in srgb, var(--cavern-accent) 85%, var(--cavern-text));
+	}
+}
+
+// Второстепенное действие с рамкой.
+:host([data-variant='secondary']) {
+	border-color: var(--cavern-border);
+	background: var(--cavern-surface);
+	color: var(--cavern-text);
+
+	&:hover:not(:disabled, [aria-disabled='true']) {
+		border-color: var(--cavern-accent);
+		background: var(--cavern-surface-hover);
+	}
+}
+
+// Текстовое действие без рамки и фона.
+:host([data-variant='tertiary']) {
+	border-color: transparent;
+	background: transparent;
+	color: var(--cavern-accent);
+
+	&:hover:not(:disabled, [aria-disabled='true']) {
+		background: color-mix(in srgb, var(--cavern-accent) 12%, transparent);
+	}
+}
+
+// Контрастное действие инвертирует цвет текста и фона.
+:host([data-variant='contrast']) {
+	border-color: var(--cavern-text);
+	background: var(--cavern-text);
+	color: var(--cavern-bg);
+
+	&:hover:not(:disabled, [aria-disabled='true']) {
+		border-color: color-mix(in srgb, var(--cavern-text) 85%, var(--cavern-bg));
+		background: color-mix(in srgb, var(--cavern-text) 85%, var(--cavern-bg));
+	}
+}
+
+// Нейтральное действие с заливкой без рамки.
+:host([data-variant='neutral']) {
+	border-color: transparent;
+	background: var(--cavern-surface-hover);
+	color: var(--cavern-text);
+
+	&:hover:not(:disabled, [aria-disabled='true']) {
+		background: color-mix(in srgb, var(--cavern-surface-hover) 85%, var(--cavern-text));
+	}
+}

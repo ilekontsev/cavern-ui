@@ -55,19 +55,6 @@
 
 .auth__submit {
 	align-self: flex-start;
-	padding: 0.55rem 1rem;
-	border: 1px solid var(--cavern-accent);
-	border-radius: 0.5rem;
-	background: var(--cavern-accent);
-	color: #ffffff;
-	font: inherit;
-	font-weight: 500;
-	cursor: pointer;
-
-	&:disabled {
-		opacity: 0.6;
-		cursor: not-allowed;
-	}
 }
 
 .auth__hint,

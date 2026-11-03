@@ -41,7 +41,14 @@
 				<p class="auth__error">{{ error.message }}</p>
 			}
 
-			<button class="auth__submit" type="submit" [disabled]="loginForm().submitting()">
+			<button
+				app-button
+				class="auth__submit"
+				variant="primary"
+				size="medium"
+				type="submit"
+				[disabled]="loginForm().submitting()"
+			>
 				@if (loginForm().submitting()) {
 					Вход…
 				} @else {

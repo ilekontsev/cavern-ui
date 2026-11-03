@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Card, Page } from '../../ui-kit';
+import { Button, Card, Page } from '../../ui-kit';
 
 @Component({
-	imports: [RouterLink, Card, Page],
+	imports: [Button, Card, Page, RouterLink],
 	selector: 'app-home',
 	styleUrl: './home.scss',
 	templateUrl: './home.html',

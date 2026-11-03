@@ -50,47 +50,6 @@
 	color: var(--cavern-text);
 }
 
-.shell__logout {
-	padding: 0.4rem 0.8rem;
-	border: 1px solid var(--cavern-border);
-	border-radius: 0.5rem;
-	background: transparent;
-	color: var(--cavern-muted);
-	font: inherit;
-	font-size: 0.9rem;
-	cursor: pointer;
-
-	&:hover {
-		border-color: var(--cavern-accent);
-		color: var(--cavern-text);
-		background: var(--cavern-surface-hover);
-	}
-}
-
-.shell__theme {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 2.25rem;
-	height: 2.25rem;
-	padding: 0;
-	border: 1px solid var(--cavern-border);
-	border-radius: 0.5rem;
-	background: transparent;
-	color: var(--cavern-text);
-	font-size: 1rem;
-	line-height: 1;
-	cursor: pointer;
-	transition:
-		background-color 0.15s ease,
-		border-color 0.15s ease;
-
-	&:hover {
-		border-color: var(--cavern-accent);
-		background: var(--cavern-surface-hover);
-	}
-}
-
 .shell__main {
 	max-width: 60rem;
 	margin: 0 auto;
