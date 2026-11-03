@@ -1,0 +1,21 @@
+:host {
+	display: block;
+	box-sizing: border-box;
+}
+
+.page__header {
+	margin-bottom: 1.5rem;
+}
+
+.page__title {
+	margin: 0;
+	font-size: 1.75rem;
+	font-weight: 600;
+	color: var(--cavern-text, #1a1d23);
+}
+
+.page__subtitle {
+	margin: 0.5rem 0 0;
+	font-size: 0.95rem;
+	color: var(--cavern-muted, #5b6472);
+}

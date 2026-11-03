@@ -1,1 +1,57 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles */
+
+// Тёмная схема. Применяется явным переключением или системной настройкой,
+// если пользователь ещё не выбрал тему вручную.
+@mixin dark-theme {
+	color-scheme: dark;
+
+	--cavern-bg: #0f1115;
+	--cavern-surface: #171a21;
+	--cavern-surface-hover: #1e2430;
+	--cavern-border: #262b36;
+	--cavern-text: #e6e9ef;
+	--cavern-muted: #9aa4b2;
+	--cavern-accent: #6ea8fe;
+}
+
+// Светлая схема — значение по умолчанию.
+:root {
+	color-scheme: light;
+
+	--cavern-bg: #f6f7f9;
+	--cavern-surface: #ffffff;
+	--cavern-surface-hover: #eef1f5;
+	--cavern-border: #d8dde6;
+	--cavern-text: #1a1d23;
+	--cavern-muted: #5b6472;
+	--cavern-accent: #2f6fed;
+}
+
+:root[data-theme='dark'] {
+	@include dark-theme;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		@include dark-theme;
+	}
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background: var(--cavern-bg);
+	color: var(--cavern-text);
+	font-family:
+		system-ui,
+		-apple-system,
+		'Segoe UI',
+		Roboto,
+		sans-serif;
+	line-height: 1.5;
+}
