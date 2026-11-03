@@ -1,0 +1,10 @@
+# Сборка
+dist
+.angular
+coverage
+
+# Зависимости
+node_modules
+
+# Lockfile не форматируем: Prettier его перепишет
+package-lock.json
