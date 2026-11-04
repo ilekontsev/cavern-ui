@@ -3,6 +3,7 @@ import { FormField, FormRoot, form, minLength, required } from '@angular/forms/s
 import { Router, RouterLink } from '@angular/router';
 import { AuthError } from '../../../core/auth/auth.models';
 import { AuthService } from '../../../core/auth/auth.service';
+import { ROUTE_URLS } from '../../../core/routes';
 import { Button, Input, Page } from '../../../ui-kit';
 
 interface LoginFormModel {
@@ -21,6 +22,7 @@ export class Login {
 	private readonly router = inject(Router);
 
 	protected readonly model = signal<LoginFormModel>({ login: '', password: '' });
+	protected readonly routeUrls = ROUTE_URLS;
 
 	protected readonly loginForm = form(
 		this.model,
@@ -34,7 +36,7 @@ export class Login {
 				action: async (field) => {
 					try {
 						await this.auth.login(field().value());
-						await this.router.navigateByUrl('/profile');
+						await this.router.navigateByUrl(ROUTE_URLS.profile);
 
 						return null;
 					} catch (error) {

@@ -3,10 +3,30 @@
 		<p class="docs__title">UI Kit</p>
 
 		<nav class="docs__nav">
-			<a class="docs__link" routerLink="button" routerLinkActive="docs__link--active"> Button </a>
-			<a class="docs__link" routerLink="input" routerLinkActive="docs__link--active"> Input </a>
-			<a class="docs__link" routerLink="icon" routerLinkActive="docs__link--active"> Icon </a>
-			<a class="docs__link" routerLink="loader" routerLinkActive="docs__link--active"> Loader </a>
+			<a
+				class="docs__link"
+				[routerLink]="routeUrls.docsButton"
+				routerLinkActive="docs__link--active"
+			>
+				Button
+			</a>
+			<a
+				class="docs__link"
+				[routerLink]="routeUrls.docsInput"
+				routerLinkActive="docs__link--active"
+			>
+				Input
+			</a>
+			<a class="docs__link" [routerLink]="routeUrls.docsIcon" routerLinkActive="docs__link--active">
+				Icon
+			</a>
+			<a
+				class="docs__link"
+				[routerLink]="routeUrls.docsLoader"
+				routerLinkActive="docs__link--active"
+			>
+				Loader
+			</a>
 		</nav>
 	</aside>
 

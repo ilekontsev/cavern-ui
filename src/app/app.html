@@ -1,21 +1,31 @@
 <div class="shell">
 	<header class="shell__header">
-		<a class="shell__brand" routerLink="/">Cavern</a>
+		<a class="shell__brand" [routerLink]="routeUrls.home">Cavern</a>
 
 		<nav class="shell__nav">
 			<a
 				class="shell__link"
-				routerLink="/"
+				[routerLink]="routeUrls.home"
 				routerLinkActive="shell__link--active"
 				[routerLinkActiveOptions]="{ exact: true }"
 			>
 				Старт
 			</a>
-			<a class="shell__link" routerLink="/docs" routerLinkActive="shell__link--active"> Docs </a>
-			<a class="shell__link" routerLink="/profile" routerLinkActive="shell__link--active">
+			<a class="shell__link" [routerLink]="routeUrls.docs" routerLinkActive="shell__link--active">
+				Docs
+			</a>
+			<a
+				class="shell__link"
+				[routerLink]="routeUrls.profile"
+				routerLinkActive="shell__link--active"
+			>
 				Профиль
 			</a>
-			<a class="shell__link" routerLink="/sandbox" routerLinkActive="shell__link--active">
+			<a
+				class="shell__link"
+				[routerLink]="routeUrls.sandbox"
+				routerLinkActive="shell__link--active"
+			>
 				Песочница
 			</a>
 
@@ -25,8 +35,18 @@
 					Выйти
 				</button>
 			} @else {
-				<a class="shell__link" routerLink="/login" routerLinkActive="shell__link--active"> Вход </a>
-				<a class="shell__link" routerLink="/register" routerLinkActive="shell__link--active">
+				<a
+					class="shell__link"
+					[routerLink]="routeUrls.login"
+					routerLinkActive="shell__link--active"
+				>
+					Вход
+				</a>
+				<a
+					class="shell__link"
+					[routerLink]="routeUrls.register"
+					routerLinkActive="shell__link--active"
+				>
 					Регистрация
 				</a>
 			}

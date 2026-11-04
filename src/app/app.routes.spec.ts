@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, provideRouter, Router } from '@angular/router';
 import { routes } from './app.routes';
+import { ROUTE_URLS } from './core/routes';
 
 function leafRoute(snapshot: ActivatedRouteSnapshot): ActivatedRouteSnapshot {
 	let current = snapshot;
@@ -18,16 +19,16 @@ describe('app routes', () => {
 	});
 
 	const urls = [
-		'/',
-		'/profile',
-		'/sandbox',
-		'/docs',
-		'/docs/button',
-		'/docs/input',
-		'/docs/icon',
-		'/docs/loader',
-		'/login',
-		'/register',
+		ROUTE_URLS.home,
+		ROUTE_URLS.profile,
+		ROUTE_URLS.sandbox,
+		ROUTE_URLS.docs,
+		ROUTE_URLS.docsButton,
+		ROUTE_URLS.docsInput,
+		ROUTE_URLS.docsIcon,
+		ROUTE_URLS.docsLoader,
+		ROUTE_URLS.login,
+		ROUTE_URLS.register,
 	];
 
 	for (const url of urls) {
@@ -45,6 +46,6 @@ describe('app routes', () => {
 
 		await router.navigateByUrl('/unknown');
 
-		expect(router.url).toBe('/');
+		expect(router.url).toBe(ROUTE_URLS.home);
 	});
 });

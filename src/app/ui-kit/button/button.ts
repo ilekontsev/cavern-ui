@@ -9,7 +9,7 @@ export type ButtonSize = 'small' | 'medium' | 'large';
  *
  * Используется на нативном `<button>` или `<a>`:
  * `<button app-button variant="primary">…</button>`
- * `<a app-button variant="secondary" routerLink="/profile">…</a>`
+ * `<a app-button variant="secondary" [routerLink]="routeUrls.profile">…</a>`
  *
  * Иконки добавляются директивой `app-icon` прямо в контент кнопки.
  *
