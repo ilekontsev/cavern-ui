@@ -10,11 +10,15 @@ import {
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import { Icon } from '../icon/icon';
+import { Loader } from '../loader/loader';
 
 let nextInputId = 0;
 
 /** Одна иконка или несколько иконок Material Symbols. */
 export type InputIcon = string | readonly string[];
+
+/** Сторона поля, на которой показывается лоадер. */
+export type InputLoadingPosition = 'start' | 'end';
 
 function toIconNames(value: InputIcon | undefined): readonly string[] {
 	if (!value) {
@@ -32,10 +36,14 @@ function toIconNames(value: InputIcon | undefined): readonly string[] {
  * передать как одно название, так и массив названий. Слоты
  * `[appInputPrefix]` и `[appInputSuffix]` зарезервированы под картинки,
  * лоадеры, кнопки и иконки с собственным оформлением.
+ *
+ * В состоянии `loading` на выбранной стороне (`loadingPosition`) показывается
+ * лоадер. Если на этой стороне заданы иконки `iconStart`/`iconEnd`, лоадер
+ * заменяет их.
  */
 @Component({
 	selector: 'app-input',
-	imports: [Icon],
+	imports: [Icon, Loader],
 	styleUrl: './input.scss',
 	templateUrl: './input.html',
 })
@@ -50,6 +58,9 @@ export class Input implements FormValueControl<string> {
 	readonly iconStart = input<InputIcon>();
 	/** Иконки Material Symbols внутри поля в конце. */
 	readonly iconEnd = input<InputIcon>();
+
+	readonly loading = input(false, { transform: booleanAttribute });
+	readonly loadingPosition = input<InputLoadingPosition>('end');
 
 	readonly value = model<string>('');
 	readonly name = input<string>('');
@@ -68,6 +79,12 @@ export class Input implements FormValueControl<string> {
 	protected readonly messageId = computed(() => `${this.controlId()}-message`);
 	protected readonly startIcons = computed(() => toIconNames(this.iconStart()));
 	protected readonly endIcons = computed(() => toIconNames(this.iconEnd()));
+	protected readonly isLoadingStart = computed(
+		() => this.loading() && this.loadingPosition() === 'start'
+	);
+	protected readonly isLoadingEnd = computed(
+		() => this.loading() && this.loadingPosition() === 'end'
+	);
 	protected readonly showErrors = computed(
 		() => this.invalid() && this.touched() && this.errors().length > 0
 	);

@@ -39,13 +39,9 @@
 				variant="primary"
 				size="medium"
 				type="submit"
-				[disabled]="registerForm().submitting()"
+				[loading]="registerForm().submitting()"
 			>
-				@if (registerForm().submitting()) {
-					Регистрация…
-				} @else {
-					Зарегистрироваться
-				}
+				Зарегистрироваться
 			</button>
 		</form>
 

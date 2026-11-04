@@ -1,0 +1,21 @@
+// Кольцевой индикатор загрузки. Размер и цвет задаются CSS-переменными,
+// чтобы лоадер можно было встроить в кнопку, поле или использовать отдельно.
+:host {
+	display: inline-block;
+	flex: 0 0 auto;
+	box-sizing: border-box;
+	width: var(--app-loader-size, 1.25em);
+	height: var(--app-loader-size, 1.25em);
+	border: var(--app-loader-thickness, 2px) solid
+		color-mix(in srgb, var(--app-loader-color, currentColor) 30%, transparent);
+	border-top-color: var(--app-loader-color, currentColor);
+	border-radius: 50%;
+	vertical-align: middle;
+	animation: app-loader-spin 0.7s linear infinite;
+}
+
+@keyframes app-loader-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}

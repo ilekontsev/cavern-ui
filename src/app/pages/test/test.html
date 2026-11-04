@@ -32,6 +32,43 @@
 	</section>
 
 	<section class="test__section">
+		<h2 class="test__heading">Кнопки с лоадером</h2>
+
+		<div class="test__row">
+			<button
+				app-button
+				variant="primary"
+				type="button"
+				[loading]="buttonLoading()"
+				(click)="buttonLoading.set(true)"
+			>
+				<span app-icon="save"></span>
+				Сохранить
+			</button>
+
+			<button app-button variant="secondary" type="button" (click)="buttonLoading.set(false)">
+				Сбросить
+			</button>
+
+			<button app-button variant="secondary" type="button" loading>Всегда загружается</button>
+		</div>
+	</section>
+
+	<section class="test__section">
+		<h2 class="test__heading">Лоадеры</h2>
+
+		<div class="test__row">
+			<span app-loader></span>
+			<span app-loader style="--app-loader-size: 2rem"></span>
+			<span app-loader style="--app-loader-size: 2.5rem; --app-loader-color: #2f6fed"></span>
+			<span
+				app-loader
+				style="--app-loader-size: 3rem; --app-loader-color: #d9480f; --app-loader-thickness: 4px"
+			></span>
+		</div>
+	</section>
+
+	<section class="test__section">
 		<h2 class="test__heading">Поля с иконками</h2>
 
 		<div class="test__grid">
@@ -47,6 +84,23 @@
 				<span app-icon="search" appInputPrefix></span>
 				<span app-icon="tune" appInputSuffix style="--app-icon-color: #d9480f"></span>
 			</app-input>
+		</div>
+	</section>
+
+	<section class="test__section">
+		<h2 class="test__heading">Поля с лоадером</h2>
+
+		<div class="test__grid">
+			<app-input label="Загрузка в конце" loading />
+			<app-input label="Загрузка в начале" loading loadingPosition="start" />
+			<app-input label="Лоадер вместо иконки" iconEnd="search" loading />
+			<app-input
+				label="Лоадер вместо иконки слева"
+				iconStart="person"
+				loading
+				loadingPosition="start"
+			/>
+			<app-input label="Иконка остаётся" iconStart="person" loading />
 		</div>
 	</section>
 </app-page>

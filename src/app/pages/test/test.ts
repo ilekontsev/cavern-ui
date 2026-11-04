@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
-import { Button, Icon, Input, Page } from '../../ui-kit';
+import { Component, signal } from '@angular/core';
+import { Button, Icon, Input, Loader, Page } from '../../ui-kit';
 
 @Component({
-	imports: [Button, Icon, Input, Page],
+	imports: [Button, Icon, Input, Loader, Page],
 	selector: 'app-test',
 	styleUrl: './test.scss',
 	templateUrl: './test.html',
 })
-export class Test {}
+export class Test {
+	protected readonly buttonLoading = signal(false);
+}

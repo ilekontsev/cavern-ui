@@ -1,5 +1,6 @@
 // Базовые стили кнопки: раскладка, фокус и disabled.
 :host {
+	position: relative;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -29,9 +30,34 @@
 	}
 }
 
+.button__content {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: inherit;
+}
+
+.button__content--hidden {
+	visibility: hidden;
+}
+
+// Лоадер лежит поверх скрытого контента, поэтому кнопка не меняет ширину.
+.button__loader {
+	position: absolute;
+	inset: 0;
+	margin: auto;
+}
+
 :host(:disabled),
 :host([aria-disabled='true']) {
 	opacity: 0.5;
 	cursor: not-allowed;
 	pointer-events: none;
+}
+
+// Загрузка — это активное состояние: кнопка заблокирована, но не выглядит
+// «погасшей», иначе лоадер почти не видно.
+:host([data-loading='true']) {
+	opacity: 1;
+	cursor: progress;
 }

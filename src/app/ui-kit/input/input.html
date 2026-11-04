@@ -1,8 +1,17 @@
-<div class="field" [class.field--floated]="!!value()" [class.field--invalid]="showErrors()">
+<div
+	class="field"
+	[class.field--floated]="!!value()"
+	[class.field--invalid]="showErrors()"
+	[attr.aria-busy]="loading() ? 'true' : null"
+>
 	<div class="field__box">
 		<span class="field__prefix">
-			@for (icon of startIcons(); track $index) {
-				<span [app-icon]="icon"></span>
+			@if (isLoadingStart()) {
+				<span app-loader></span>
+			} @else {
+				@for (icon of startIcons(); track $index) {
+					<span [app-icon]="icon"></span>
+				}
 			}
 			<ng-content select="[appInputPrefix]" />
 		</span>
@@ -29,8 +38,12 @@
 
 		<span class="field__suffix">
 			<ng-content select="[appInputSuffix]" />
-			@for (icon of endIcons(); track $index) {
-				<span [app-icon]="icon"></span>
+			@if (isLoadingEnd()) {
+				<span app-loader></span>
+			} @else {
+				@for (icon of endIcons(); track $index) {
+					<span [app-icon]="icon"></span>
+				}
 			}
 		</span>
 	</div>

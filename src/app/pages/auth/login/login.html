@@ -27,13 +27,9 @@
 				variant="primary"
 				size="medium"
 				type="submit"
-				[disabled]="loginForm().submitting()"
+				[loading]="loginForm().submitting()"
 			>
-				@if (loginForm().submitting()) {
-					Вход…
-				} @else {
-					Войти
-				}
+				Войти
 			</button>
 		</form>
 

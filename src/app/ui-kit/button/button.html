@@ -1,1 +1,7 @@
-<ng-content />
+<span class="button__content" [class.button__content--hidden]="loading()">
+	<ng-content />
+</span>
+
+@if (loading()) {
+	<span class="button__loader" app-loader></span>
+}
