@@ -12,9 +12,10 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Mock API (json-server)
+## Mock API
 
-Регистрация и авторизация работают через `json-server`. Запустите его в отдельном терминале:
+Авторизация работает через лёгкий mock-сервер на Node.js (`server/index.js`).
+Запустите его в отдельном терминале:
 
 ```bash
 npm run api
@@ -28,13 +29,35 @@ npm start
 
 - `db.json` — mock-база с коллекцией `users`;
 - `proxy.conf.json` — dev-прокси: запросы Angular на `/api/*` уходят в
-  `json-server` на `http://localhost:3000`;
+  mock-сервер на `http://localhost:3000`;
 - все запросы в коде идут через `API_BASE_URL = '/api'` из
   `src/app/core/api.ts`.
 
-Когда появится реальный бэкенд, замените `target` в `proxy.conf.json` и
-уберите `pathRewrite` (если бэкенд будет отдавать API сразу по `/api`).
-Компоненты и формы при этом менять не нужно.
+### Эндпоинты
+
+| Метод | Путь             | Назначение                                                |
+| ----- | ---------------- | --------------------------------------------------------- |
+| GET   | `/users/me`      | данные пользователя; без сессии создаёт гостя             |
+| POST  | `/auth/login`    | вход, выдаёт access/refresh токены в HttpOnly-cookie      |
+| POST  | `/auth/register` | регистрация, выдаёт токены                                |
+| POST  | `/auth/refresh`  | обновляет access-токен по refresh-cookie                  |
+| POST  | `/auth/logout`   | удаляет cookie, при следующем `/users/me` создаётся гость |
+
+Токены подписаны HMAC-SHA256 и хранятся только в HttpOnly-cookie, поэтому из JS
+их прочитать нельзя. Время жизни по умолчанию: access — 15 минут, refresh —
+7 дней. Для проверки рефреша можно запустить сервер с коротким access-токеном:
+
+```bash
+ACCESS_TOKEN_TTL=60 npm run api
+```
+
+Секрет подписи задаётся через `AUTH_SECRET` (по умолчанию — значение для
+локальной разработки).
+
+На клиенте `provideAppInitializer` вызывает `GET /users/me` до первого рендера.
+Если пользователь не авторизован, сервер создаёт гостя с уникальным id. На 401
+интерцептор `authInterceptor` обновляет токен и повторяет запрос, а если refresh
+недействителен — сбрасывает сессию до гостевой.
 
 > Пароли в `db.json` хранятся в открытом виде — это только mock для локальной
 > разработки. На реальном бэкенде пароль должен хешироваться на сервере, а роль,

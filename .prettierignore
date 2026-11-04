@@ -9,5 +9,5 @@ node_modules
 # Lockfile не форматируем: Prettier его перепишет
 package-lock.json
 
-# json-server перезаписывает файл при работе приложения
+# mock-сервер перезаписывает файл при регистрации
 db.json

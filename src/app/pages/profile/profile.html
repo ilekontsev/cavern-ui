@@ -1,5 +1,5 @@
 <app-page title="Профиль" subtitle="Данные текущего пользователя.">
-	@if (auth.currentUser(); as user) {
+	@if (currentUser(); as user) {
 		<app-card heading="Аккаунт">
 			<dl class="profile__list">
 				<div class="profile__row">

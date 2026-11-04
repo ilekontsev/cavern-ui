@@ -17,7 +17,7 @@ export class App {
 	private readonly router = inject(Router);
 
 	protected readonly theme = this.themeService.theme;
-	protected readonly currentUser = this.auth.currentUser;
+	protected readonly currentUser = this.auth.authenticatedUser;
 	protected readonly routeUrls = ROUTE_URLS;
 
 	protected toggleTheme(): void {
@@ -25,7 +25,6 @@ export class App {
 	}
 
 	protected logout(): void {
-		this.auth.logout();
-		void this.router.navigateByUrl(ROUTE_URLS.home);
+		void this.auth.logout().then(() => this.router.navigateByUrl(ROUTE_URLS.home));
 	}
 }

@@ -1,119 +1,142 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
-import { API_BASE_URL } from '../api';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, Signal, computed, inject, signal } from '@angular/core';
 import {
-	AuthError,
-	DEFAULT_USER_ROLE,
-	DEFAULT_USER_TYPE,
-	LoginPayload,
-	RegisterPayload,
-	User,
-	UserRecord,
-} from './auth.models';
+	Observable,
+	catchError,
+	finalize,
+	firstValueFrom,
+	map,
+	of,
+	shareReplay,
+	throwError,
+} from 'rxjs';
+import { API_BASE_URL } from '../api';
+import { AuthError, LoginPayload, RegisterPayload, User } from './auth.models';
 
-const SESSION_KEY = 'cavern.auth.user';
+interface AuthResponse {
+	user: User;
+}
 
 /**
  * Состояние авторизации на сигналах.
  *
- * Пока данные лежат в json-server. Когда появится бэкенд, достаточно заменить
- * запросы ниже (URL уже идёт через /api) — компоненты и формы менять не нужно.
+ * Токены хранятся в HttpOnly-cookie и недоступны из JS. При старте приложение
+ * запрашивает GET /users/me: сервер вернёт либо текущего пользователя, либо
+ * создаст гостя с уникальным id.
  */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 	private readonly http = inject(HttpClient);
-	private readonly currentUserState = signal<User | null>(this.restoreSession());
+	private readonly currentUserState = signal<User | null>(null);
+	private refreshInFlight$: Observable<User> | null = null;
 
-	readonly currentUser = this.currentUserState.asReadonly();
-	readonly isAuthenticated = computed(() => this.currentUserState() !== null);
+	readonly currentUser: Signal<User | null> = this.currentUserState.asReadonly();
+	readonly authenticatedUser = computed(() => {
+		const user = this.currentUserState();
+
+		return user && user.role !== 'guest' ? user : null;
+	});
+	readonly isAuthenticated = computed(() => this.authenticatedUser() !== null);
+
+	/** Загружает пользователя с сервера или создаёт гостевую сессию. */
+	loadCurrentUser(): Observable<User> {
+		return this.http
+			.get<AuthResponse>(`${API_BASE_URL}/users/me`, { withCredentials: true })
+			.pipe(map(({ user }) => this.setCurrentUser(user)));
+	}
 
 	async register(payload: RegisterPayload): Promise<User> {
-		const login = payload.login.trim();
-		const existing = await this.findByLogin(login);
-
-		if (existing) {
-			throw new AuthError('loginTaken');
-		}
-
-		const record: Omit<UserRecord, 'id'> = {
-			login,
-			password: payload.password,
-			role: DEFAULT_USER_ROLE,
-			type: DEFAULT_USER_TYPE,
-			registeredAt: new Date().toISOString(),
-		};
-
-		const created = await firstValueFrom(
-			this.http.post<UserRecord>(`${API_BASE_URL}/users`, record)
+		return firstValueFrom(
+			this.http
+				.post<AuthResponse>(`${API_BASE_URL}/auth/register`, payload, {
+					withCredentials: true,
+				})
+				.pipe(
+					map(({ user }) => this.setCurrentUser(user)),
+					catchError((error: unknown) => throwError(() => this.toAuthError(error)))
+				)
 		);
-
-		return this.startSession(created);
 	}
 
 	async login(payload: LoginPayload): Promise<User> {
-		const record = await this.findByLogin(payload.login.trim());
+		return firstValueFrom(
+			this.http
+				.post<AuthResponse>(`${API_BASE_URL}/auth/login`, payload, {
+					withCredentials: true,
+				})
+				.pipe(
+					map(({ user }) => this.setCurrentUser(user)),
+					catchError((error: unknown) => throwError(() => this.toAuthError(error)))
+				)
+		);
+	}
 
-		if (!record || record.password !== payload.password) {
-			throw new AuthError('invalidCredentials');
+	async logout(): Promise<void> {
+		try {
+			await firstValueFrom(
+				this.http.post<void>(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true })
+			);
+		} catch {
+			// Выход должен работать и при недоступном API.
 		}
 
-		return this.startSession(record);
-	}
-
-	logout(): void {
 		this.currentUserState.set(null);
-		this.removeSession();
+
+		try {
+			await firstValueFrom(this.loadCurrentUser());
+		} catch {
+			// Если API недоступен, остаёмся без пользователя до следующего запроса.
+		}
 	}
 
-	private async findByLogin(login: string): Promise<UserRecord | null> {
-		const users = await firstValueFrom(
-			this.http.get<UserRecord[]>(`${API_BASE_URL}/users`, {
-				params: { 'login:eq': login },
-			})
+	/** Обновляет access-токен через refresh-cookie. Параллельные вызовы ждут один запрос. */
+	refreshSession(): Observable<User> {
+		const inFlight = this.refreshInFlight$;
+
+		if (inFlight) {
+			return inFlight;
+		}
+
+		const request$ = this.http
+			.post<AuthResponse>(`${API_BASE_URL}/auth/refresh`, {}, { withCredentials: true })
+			.pipe(
+				map(({ user }) => this.setCurrentUser(user)),
+				finalize(() => {
+					this.refreshInFlight$ = null;
+				}),
+				shareReplay({ bufferSize: 1, refCount: false })
+			);
+
+		this.refreshInFlight$ = request$;
+
+		return request$;
+	}
+
+	/** Сбрасывает сессию и запрашивает у сервера новую гостевую. */
+	expireSession(): Observable<void> {
+		this.currentUserState.set(null);
+
+		return this.loadCurrentUser().pipe(
+			map(() => undefined),
+			catchError(() => of(undefined))
 		);
-
-		return users[0] ?? null;
 	}
 
-	private startSession(record: UserRecord): User {
-		const user: User = {
-			id: record.id,
-			login: record.login,
-			role: record.role,
-			type: record.type,
-			registeredAt: record.registeredAt,
-		};
-
+	private setCurrentUser(user: User): User {
 		this.currentUserState.set(user);
-		this.persistSession(user);
 
 		return user;
 	}
 
-	private restoreSession(): User | null {
-		try {
-			const stored = localStorage.getItem(SESSION_KEY);
+	private toAuthError(error: unknown): unknown {
+		if (error instanceof HttpErrorResponse) {
+			const code = (error.error as { code?: string } | null)?.code;
 
-			return stored ? (JSON.parse(stored) as User) : null;
-		} catch {
-			return null;
+			if (code === 'invalidCredentials' || code === 'loginTaken') {
+				return new AuthError(code);
+			}
 		}
-	}
 
-	private persistSession(user: User): void {
-		try {
-			localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-		} catch {
-			// Приватный режим браузера может запрещать запись — сессия останется только в памяти.
-		}
-	}
-
-	private removeSession(): void {
-		try {
-			localStorage.removeItem(SESSION_KEY);
-		} catch {
-			// См. persistSession.
-		}
+		return error;
 	}
 }

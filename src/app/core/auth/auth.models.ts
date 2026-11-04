@@ -1,11 +1,8 @@
-export type UserRole = 'user' | 'admin';
+export type UserRole = 'guest' | 'user' | 'admin';
 export type UserType = 'standard' | 'premium';
 
-/** Значения, которые система назначает при регистрации. */
-export const DEFAULT_USER_ROLE: UserRole = 'user';
-export const DEFAULT_USER_TYPE: UserType = 'standard';
-
 export const USER_ROLE_LABELS: Record<UserRole, string> = {
+	guest: 'Гость',
 	user: 'Пользователь',
 	admin: 'Администратор',
 };
@@ -15,7 +12,7 @@ export const USER_TYPE_LABELS: Record<UserType, string> = {
 	premium: 'Премиум',
 };
 
-/** Запись пользователя в mock-базе json-server. Пароль хранится только здесь. */
+/** Запись пользователя в db.json mock-сервера. Пароль хранится только здесь. */
 export interface UserRecord {
 	id: string;
 	login: string;
@@ -25,7 +22,7 @@ export interface UserRecord {
 	registeredAt: string;
 }
 
-/** Пользователь без пароля — именно он попадает в состояние приложения и localStorage. */
+/** Пользователь без пароля — именно он попадает в состояние приложения. */
 export type User = Omit<UserRecord, 'password'>;
 
 export interface LoginPayload {

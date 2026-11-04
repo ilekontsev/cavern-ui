@@ -14,6 +14,7 @@ import { Button, Card, Page } from '../../ui-kit';
 })
 export class Profile {
 	protected readonly auth = inject(AuthService);
+	protected readonly currentUser = this.auth.authenticatedUser;
 	protected readonly routeUrls = ROUTE_URLS;
 	protected readonly roleLabels = USER_ROLE_LABELS;
 	protected readonly typeLabels = USER_TYPE_LABELS;
