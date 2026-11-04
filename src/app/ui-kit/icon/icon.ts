@@ -22,7 +22,7 @@ import { Directive, input } from '@angular/core';
 	},
 })
 export class Icon {
-	readonly appIcon = input.required<string>({ alias: 'app-icon' });
+	public readonly appIcon = input.required<string>({ alias: 'app-icon' });
 
 	protected readonly styles: Record<string, string> = {
 		display: 'inline-block',

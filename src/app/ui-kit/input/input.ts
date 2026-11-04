@@ -1,14 +1,15 @@
 import {
-	Component,
-	ElementRef,
 	booleanAttribute,
+	Component,
 	computed,
+	ElementRef,
 	input,
 	model,
 	output,
 	viewChild,
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+
 import { Icon } from '../icon/icon';
 import { Loader } from '../loader/loader';
 
@@ -48,29 +49,29 @@ function toIconNames(value: InputIcon | undefined): readonly string[] {
 	templateUrl: './input.html',
 })
 export class Input implements FormValueControl<string> {
-	readonly label = input.required<string>();
-	readonly inputId = input<string>();
-	readonly type = input<string>('text');
-	readonly autocomplete = input<string>();
-	readonly description = input<string>();
+	public readonly label = input.required<string>();
+	public readonly inputId = input<string>();
+	public readonly type = input<string>('text');
+	public readonly autocomplete = input<string>();
+	public readonly description = input<string>();
 
 	/** Иконки Material Symbols внутри поля в начале. */
-	readonly iconStart = input<InputIcon>();
+	public readonly iconStart = input<InputIcon>();
 	/** Иконки Material Symbols внутри поля в конце. */
-	readonly iconEnd = input<InputIcon>();
+	public readonly iconEnd = input<InputIcon>();
 
-	readonly loading = input(false, { transform: booleanAttribute });
-	readonly loadingPosition = input<InputLoadingPosition>('end');
+	public readonly loading = input(false, { transform: booleanAttribute });
+	public readonly loadingPosition = input<InputLoadingPosition>('end');
 
-	readonly value = model<string>('');
-	readonly name = input<string>('');
-	readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
-	readonly disabled = input(false, { transform: booleanAttribute });
-	readonly readonly = input(false, { transform: booleanAttribute });
-	readonly required = input(false, { transform: booleanAttribute });
-	readonly invalid = input(false);
-	readonly touched = input(false);
-	readonly touch = output<void>();
+	public readonly value = model<string>('');
+	public readonly name = input<string>('');
+	public readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
+	public readonly disabled = input(false, { transform: booleanAttribute });
+	public readonly readonly = input(false, { transform: booleanAttribute });
+	public readonly required = input(false, { transform: booleanAttribute });
+	public readonly invalid = input(false);
+	public readonly touched = input(false);
+	public readonly touch = output<void>();
 
 	private readonly generatedId = `app-input-${nextInputId++}`;
 	private readonly controlElement = viewChild<ElementRef<HTMLInputElement>>('control');
@@ -92,7 +93,7 @@ export class Input implements FormValueControl<string> {
 		this.showErrors() || this.description() ? this.messageId() : null
 	);
 
-	focus(options?: FocusOptions): void {
+	public focus(options?: FocusOptions): void {
 		this.controlElement()?.nativeElement.focus(options);
 	}
 

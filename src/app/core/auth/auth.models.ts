@@ -38,7 +38,7 @@ export interface RegisterPayload {
 export type AuthErrorCode = 'loginTaken' | 'invalidCredentials';
 
 export class AuthError extends Error {
-	constructor(readonly code: AuthErrorCode) {
+	constructor(public readonly code: AuthErrorCode) {
 		super(code);
 		this.name = 'AuthError';
 	}

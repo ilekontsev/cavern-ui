@@ -1,4 +1,4 @@
-import { DestroyRef, Injectable, computed, effect, inject, signal } from '@angular/core';
+import { computed, DestroyRef, effect, inject, Injectable, signal } from '@angular/core';
 
 export type ThemeMode = 'system' | 'light' | 'dark';
 export type Theme = 'light' | 'dark';
@@ -11,11 +11,12 @@ const DARK_QUERY = '(prefers-color-scheme: dark)';
  */
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
+	private readonly destroyRef = inject(DestroyRef);
 	private readonly media: MediaQueryList | null = window.matchMedia?.(DARK_QUERY) ?? null;
 	private readonly systemTheme = signal<Theme>(this.media?.matches ? 'dark' : 'light');
 
-	readonly mode = signal<ThemeMode>('system');
-	readonly theme = computed<Theme>(() => {
+	public readonly mode = signal<ThemeMode>('system');
+	public readonly theme = computed<Theme>(() => {
 		const mode = this.mode();
 
 		return mode === 'system' ? this.systemTheme() : mode;
@@ -23,7 +24,7 @@ export class ThemeService {
 
 	constructor() {
 		this.media?.addEventListener('change', this.onSystemThemeChange);
-		inject(DestroyRef).onDestroy(() =>
+		this.destroyRef.onDestroy(() =>
 			this.media?.removeEventListener('change', this.onSystemThemeChange)
 		);
 
@@ -32,7 +33,7 @@ export class ThemeService {
 		});
 	}
 
-	toggle(): void {
+	public toggle(): void {
 		this.mode.set(this.theme() === 'dark' ? 'light' : 'dark');
 	}
 

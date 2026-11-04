@@ -1,6 +1,7 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+
 import { AuthService } from '../../core/auth/auth.service';
 import { Channel } from '../../core/channels/channel.models';
 import { ChannelService } from '../../core/channels/channel.service';
@@ -25,7 +26,7 @@ export class ChannelSearch implements OnInit {
 	protected readonly actionId = signal<string | null>(null);
 	protected readonly error = signal<string | null>(null);
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		void this.fetchChannels('');
 	}
 

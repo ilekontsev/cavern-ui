@@ -6,20 +6,20 @@ let nextModalId = 0;
  * Содержит переданные данные, позволяет закрыть окно и дождаться результата.
  */
 export class ModalRef<TResult = unknown, TData = unknown> {
-	readonly id = nextModalId++;
-	readonly afterClosed: Promise<TResult | undefined>;
+	public readonly id = nextModalId++;
+	public readonly afterClosed: Promise<TResult | undefined>;
 
 	private closeHandler?: (result?: TResult) => void;
 	private closed = false;
 	private resolveClosed!: (result: TResult | undefined) => void;
 
-	constructor(readonly data: TData) {
+	constructor(public readonly data: TData) {
 		this.afterClosed = new Promise((resolve) => {
 			this.resolveClosed = resolve;
 		});
 	}
 
-	close(result?: TResult): void {
+	public close(result?: TResult): void {
 		if (this.closed) {
 			return;
 		}
@@ -30,7 +30,7 @@ export class ModalRef<TResult = unknown, TData = unknown> {
 	}
 
 	/** @internal Используется `ModalService` для привязки к порталу. */
-	setCloseHandler(handler: (result?: TResult) => void): void {
+	public setCloseHandler(handler: (result?: TResult) => void): void {
 		this.closeHandler = handler;
 	}
 }

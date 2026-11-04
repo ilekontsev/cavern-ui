@@ -2,6 +2,7 @@ import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+
 import { Channel } from '../../core/channels/channel.models';
 import { ChannelService } from '../../core/channels/channel.service';
 import { ROUTE_URLS } from '../../core/routes';

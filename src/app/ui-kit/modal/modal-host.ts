@@ -2,15 +2,16 @@ import {
 	Component,
 	ComponentRef,
 	EnvironmentInjector,
-	Injector,
-	Type,
 	inject,
+	Injector,
 	input,
 	output,
 	signal,
+	Type,
 	viewChild,
 	ViewContainerRef,
 } from '@angular/core';
+
 import { Modal } from './modal';
 
 /**
@@ -24,17 +25,18 @@ import { Modal } from './modal';
 	templateUrl: './modal-host.html',
 })
 export class ModalHost {
-	readonly title = input<string>();
-	readonly closed = output<void>();
+	private readonly environmentInjector = inject(EnvironmentInjector);
+
+	public readonly title = input<string>();
+	public readonly closed = output<void>();
 
 	protected readonly isOpen = signal(true);
 
 	private readonly content = viewChild.required('content', {
 		read: ViewContainerRef,
 	});
-	private readonly environmentInjector = inject(EnvironmentInjector);
 
-	attach<C>(component: Type<C>, injector: Injector): ComponentRef<C> {
+	public attach<C>(component: Type<C>, injector: Injector): ComponentRef<C> {
 		const componentRef = this.content().createComponent(component, {
 			environmentInjector: this.environmentInjector,
 			injector,

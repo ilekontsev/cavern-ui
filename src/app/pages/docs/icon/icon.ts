@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { Button, Icon, Input, Page } from '../../../ui-kit';
 import { DocsExample } from '../docs-example/docs-example';
 

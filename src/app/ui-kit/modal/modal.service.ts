@@ -1,8 +1,9 @@
-import { EnvironmentInjector, Injectable, Injector, Type, inject } from '@angular/core';
+import { EnvironmentInjector, inject, Injectable, Injector, Type } from '@angular/core';
+
 import { PortalService } from '../portal/portal.service';
+import { MODAL_CLOSE, MODAL_DATA, MODAL_REF } from './modal.tokens';
 import { ModalHost } from './modal-host';
 import { ModalRef } from './modal-ref';
-import { MODAL_CLOSE, MODAL_DATA, MODAL_REF } from './modal.tokens';
 
 /** Настройки открытия модального окна. */
 export interface ModalConfig<TData = unknown> {
@@ -36,7 +37,7 @@ export class ModalService {
 	private readonly portal = inject(PortalService);
 	private readonly environmentInjector = inject(EnvironmentInjector);
 
-	open<TResult = unknown, TData = unknown>(
+	public open<TResult = unknown, TData = unknown>(
 		component: Type<unknown>,
 		config: ModalConfig<TData> = {}
 	): ModalRef<TResult, TData> {
@@ -45,11 +46,11 @@ export class ModalService {
 		const modalInjector = Injector.create({
 			parent: parentInjector,
 			providers: [
-				{ provide: MODAL_DATA, useFactory: () => config.data },
+				{ provide: MODAL_DATA, useFactory: (): TData | undefined => config.data },
 				{ provide: MODAL_REF, useValue: modalRef },
 				{
 					provide: MODAL_CLOSE,
-					useValue: (result?: unknown) => modalRef.close(result as TResult),
+					useValue: (result?: unknown): void => modalRef.close(result as TResult),
 				},
 			],
 		});

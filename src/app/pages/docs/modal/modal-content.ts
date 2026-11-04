@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+
 import { Button, MODAL_CLOSE, MODAL_DATA, MODAL_REF } from '../../../ui-kit';
 
 export interface DemoModalData {

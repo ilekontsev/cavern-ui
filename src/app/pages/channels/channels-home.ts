@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { Page } from '../../ui-kit';
 
 @Component({

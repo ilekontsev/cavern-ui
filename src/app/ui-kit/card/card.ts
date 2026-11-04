@@ -6,5 +6,5 @@ import { Component, input } from '@angular/core';
 	templateUrl: './card.html',
 })
 export class Card {
-	readonly heading = input<string>();
+	public readonly heading = input<string>();
 }

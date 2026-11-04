@@ -6,6 +6,6 @@ import { Component, input } from '@angular/core';
 	templateUrl: './page.html',
 })
 export class Page {
-	readonly title = input.required<string>();
-	readonly subtitle = input<string>();
+	public readonly title = input.required<string>();
+	public readonly subtitle = input<string>();
 }

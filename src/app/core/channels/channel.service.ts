@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+
 import { API_BASE_URL } from '../api';
 import {
 	Channel,
@@ -17,7 +18,7 @@ export class ChannelService {
 	private readonly http = inject(HttpClient);
 
 	/** Все каналы или результат поиска по названию и описанию. */
-	list(search = ''): Observable<Channel[]> {
+	public list(search = ''): Observable<Channel[]> {
 		const query = search.trim();
 		const params = query ? new HttpParams().set('search', query) : undefined;
 
@@ -27,7 +28,7 @@ export class ChannelService {
 	}
 
 	/** Каналы, которыми пользователь владеет или в которых состоит. */
-	mine(): Observable<Channel[]> {
+	public mine(): Observable<Channel[]> {
 		const params = new HttpParams().set('mine', 'true');
 
 		return this.http
@@ -35,7 +36,7 @@ export class ChannelService {
 			.pipe(map(({ channels }) => channels));
 	}
 
-	get(id: string): Observable<Channel> {
+	public get(id: string): Observable<Channel> {
 		return this.http
 			.get<ChannelResponse>(`${CHANNELS_URL}/${encodeURIComponent(id)}`, {
 				withCredentials: true,
@@ -43,13 +44,13 @@ export class ChannelService {
 			.pipe(map(({ channel }) => channel));
 	}
 
-	create(payload: ChannelCreatePayload): Observable<Channel> {
+	public create(payload: ChannelCreatePayload): Observable<Channel> {
 		return this.http
 			.post<ChannelResponse>(CHANNELS_URL, payload, { withCredentials: true })
 			.pipe(map(({ channel }) => channel));
 	}
 
-	join(id: string): Observable<Channel> {
+	public join(id: string): Observable<Channel> {
 		return this.http
 			.post<ChannelResponse>(
 				`${CHANNELS_URL}/${encodeURIComponent(id)}/join`,
@@ -61,7 +62,7 @@ export class ChannelService {
 			.pipe(map(({ channel }) => channel));
 	}
 
-	remove(id: string): Observable<void> {
+	public remove(id: string): Observable<void> {
 		return this.http.delete<void>(`${CHANNELS_URL}/${encodeURIComponent(id)}`, {
 			withCredentials: true,
 		});

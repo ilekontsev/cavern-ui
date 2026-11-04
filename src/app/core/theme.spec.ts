@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+
 import { ThemeService } from './theme';
 
 const DARK_QUERY = '(prefers-color-scheme: dark)';
 
 class MediaQueryListStub extends EventTarget {
-	onchange: ((this: MediaQueryList, event: MediaQueryListEvent) => unknown) | null = null;
+	public onchange: ((this: MediaQueryList, event: MediaQueryListEvent) => unknown) | null = null;
 
 	constructor(
-		readonly media: string,
+		public readonly media: string,
 		public matches: boolean
 	) {
 		super();

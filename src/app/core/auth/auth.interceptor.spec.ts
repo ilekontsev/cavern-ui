@@ -2,8 +2,9 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
-import { User } from './auth.models';
+
 import { authInterceptor } from './auth.interceptor';
+import { User } from './auth.models';
 
 const USER: User = {
 	id: '1',

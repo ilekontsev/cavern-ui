@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { ROUTE_SEGMENTS } from '../../../core/routes';
 
 export const routes: Routes = [

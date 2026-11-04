@@ -1,10 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+
 import { AuthService } from '../../core/auth/auth.service';
 import { ChannelService } from '../../core/channels/channel.service';
 import { ROUTE_URLS } from '../../core/routes';
 import { Button, Card, Input, Page } from '../../ui-kit';
+
+const NAME_MAX_LENGTH = 64;
+const DESCRIPTION_MAX_LENGTH = 500;
 
 @Component({
 	imports: [Button, Card, Input, Page, RouterLink],
@@ -38,13 +42,13 @@ export class ChannelCreate {
 			return;
 		}
 
-		if (name.length > 64) {
-			this.error.set('Название должно содержать максимум 64 символа.');
+		if (name.length > NAME_MAX_LENGTH) {
+			this.error.set(`Название должно содержать максимум ${NAME_MAX_LENGTH} символа.`);
 			return;
 		}
 
-		if (description.length > 500) {
-			this.error.set('Описание должно содержать максимум 500 символов.');
+		if (description.length > DESCRIPTION_MAX_LENGTH) {
+			this.error.set(`Описание должно содержать максимум ${DESCRIPTION_MAX_LENGTH} символов.`);
 			return;
 		}
 

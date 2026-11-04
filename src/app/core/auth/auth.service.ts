@@ -1,15 +1,16 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, Signal, computed, inject, signal } from '@angular/core';
+import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import {
-	Observable,
 	catchError,
 	finalize,
 	firstValueFrom,
 	map,
+	Observable,
 	of,
 	shareReplay,
 	throwError,
 } from 'rxjs';
+
 import { API_BASE_URL } from '../api';
 import { AuthError, LoginPayload, RegisterPayload, User } from './auth.models';
 
@@ -30,22 +31,22 @@ export class AuthService {
 	private readonly currentUserState = signal<User | null>(null);
 	private refreshInFlight$: Observable<User> | null = null;
 
-	readonly currentUser: Signal<User | null> = this.currentUserState.asReadonly();
-	readonly authenticatedUser = computed(() => {
+	public readonly currentUser: Signal<User | null> = this.currentUserState.asReadonly();
+	public readonly authenticatedUser = computed(() => {
 		const user = this.currentUserState();
 
 		return user && user.role !== 'guest' ? user : null;
 	});
-	readonly isAuthenticated = computed(() => this.authenticatedUser() !== null);
+	public readonly isAuthenticated = computed(() => this.authenticatedUser() !== null);
 
 	/** Загружает пользователя с сервера или создаёт гостевую сессию. */
-	loadCurrentUser(): Observable<User> {
+	public loadCurrentUser(): Observable<User> {
 		return this.http
 			.get<AuthResponse>(`${API_BASE_URL}/users/me`, { withCredentials: true })
 			.pipe(map(({ user }) => this.setCurrentUser(user)));
 	}
 
-	async register(payload: RegisterPayload): Promise<User> {
+	public async register(payload: RegisterPayload): Promise<User> {
 		return firstValueFrom(
 			this.http
 				.post<AuthResponse>(`${API_BASE_URL}/auth/register`, payload, {
@@ -58,7 +59,7 @@ export class AuthService {
 		);
 	}
 
-	async login(payload: LoginPayload): Promise<User> {
+	public async login(payload: LoginPayload): Promise<User> {
 		return firstValueFrom(
 			this.http
 				.post<AuthResponse>(`${API_BASE_URL}/auth/login`, payload, {
@@ -71,7 +72,7 @@ export class AuthService {
 		);
 	}
 
-	async logout(): Promise<void> {
+	public async logout(): Promise<void> {
 		try {
 			await firstValueFrom(
 				this.http.post<void>(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true })
@@ -90,7 +91,7 @@ export class AuthService {
 	}
 
 	/** Обновляет access-токен через refresh-cookie. Параллельные вызовы ждут один запрос. */
-	refreshSession(): Observable<User> {
+	public refreshSession(): Observable<User> {
 		const inFlight = this.refreshInFlight$;
 
 		if (inFlight) {
@@ -113,7 +114,7 @@ export class AuthService {
 	}
 
 	/** Сбрасывает сессию и запрашивает у сервера новую гостевую. */
-	expireSession(): Observable<void> {
+	public expireSession(): Observable<void> {
 		this.currentUserState.set(null);
 
 		return this.loadCurrentUser().pipe(

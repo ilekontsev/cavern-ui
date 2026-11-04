@@ -1,10 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormField, FormRoot, form, minLength, required } from '@angular/forms/signals';
+import { form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
+
 import { AuthError } from '../../../core/auth/auth.models';
 import { AuthService } from '../../../core/auth/auth.service';
 import { ROUTE_URLS } from '../../../core/routes';
 import { Button, Input, Page } from '../../../ui-kit';
+
+const PASSWORD_MIN_LENGTH = 8;
 
 interface LoginFormModel {
 	login: string;
@@ -29,7 +32,9 @@ export class Login {
 		(path) => {
 			required(path.login, { message: 'Введите логин' });
 			required(path.password, { message: 'Введите пароль' });
-			minLength(path.password, 8, { message: 'Пароль должен содержать минимум 8 символов' });
+			minLength(path.password, PASSWORD_MIN_LENGTH, {
+				message: `Пароль должен содержать минимум ${PASSWORD_MIN_LENGTH} символов`,
+			});
 		},
 		{
 			submission: {

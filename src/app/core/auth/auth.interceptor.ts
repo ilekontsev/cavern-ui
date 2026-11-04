@@ -1,8 +1,11 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
+
 import { API_BASE_URL } from '../api';
 import { AuthService } from './auth.service';
+
+const HTTP_STATUS_UNAUTHORIZED = 401;
 
 const AUTH_ENDPOINTS = [
 	`${API_BASE_URL}/auth/login`,
@@ -26,7 +29,7 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
 		catchError((error: unknown) => {
 			if (
 				!(error instanceof HttpErrorResponse) ||
-				error.status !== 401 ||
+				error.status !== HTTP_STATUS_UNAUTHORIZED ||
 				isAuthEndpoint(request.url)
 			) {
 				return throwError(() => error);

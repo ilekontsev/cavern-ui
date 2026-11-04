@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import {
+	form,
 	FormField,
 	FormRoot,
-	form,
 	maxLength,
 	minLength,
 	pattern,
@@ -10,10 +10,15 @@ import {
 	validate,
 } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
+
 import { AuthError } from '../../../core/auth/auth.models';
 import { AuthService } from '../../../core/auth/auth.service';
 import { ROUTE_URLS } from '../../../core/routes';
 import { Button, Input, Page } from '../../../ui-kit';
+
+const LOGIN_MIN_LENGTH = 3;
+const LOGIN_MAX_LENGTH = 32;
+const PASSWORD_MIN_LENGTH = 8;
 
 interface RegisterFormModel {
 	login: string;
@@ -42,14 +47,20 @@ export class Register {
 		this.model,
 		(path) => {
 			required(path.login, { message: 'Введите логин' });
-			minLength(path.login, 3, { message: 'Логин должен содержать минимум 3 символа' });
-			maxLength(path.login, 32, { message: 'Логин должен содержать максимум 32 символа' });
+			minLength(path.login, LOGIN_MIN_LENGTH, {
+				message: `Логин должен содержать минимум ${LOGIN_MIN_LENGTH} символа`,
+			});
+			maxLength(path.login, LOGIN_MAX_LENGTH, {
+				message: `Логин должен содержать максимум ${LOGIN_MAX_LENGTH} символа`,
+			});
 			pattern(path.login, /^[a-zA-Z0-9_-]+$/, {
 				message: 'Логин может содержать только латиницу, цифры, _ и -',
 			});
 
 			required(path.password, { message: 'Введите пароль' });
-			minLength(path.password, 8, { message: 'Пароль должен содержать минимум 8 символов' });
+			minLength(path.password, PASSWORD_MIN_LENGTH, {
+				message: `Пароль должен содержать минимум ${PASSWORD_MIN_LENGTH} символов`,
+			});
 
 			required(path.confirmPassword, { message: 'Повторите пароль' });
 			validate(path.confirmPassword, ({ value, valueOf }) => {

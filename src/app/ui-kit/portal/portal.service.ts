@@ -1,14 +1,16 @@
 import {
 	ApplicationRef,
 	ComponentRef,
+	createComponent,
 	DOCUMENT,
 	EnvironmentInjector,
+	inject,
 	Injectable,
 	Injector,
 	Type,
-	createComponent,
-	inject,
 } from '@angular/core';
+
+const Z_INDEX_START = 1000;
 
 /** Настройки динамического портала. */
 export interface PortalConfig {
@@ -28,21 +30,21 @@ export class PortalRef<C> {
 	private destroyed = false;
 
 	constructor(
-		readonly componentRef: ComponentRef<C>,
-		readonly container: HTMLElement,
-		readonly zIndex: number,
+		public readonly componentRef: ComponentRef<C>,
+		public readonly container: HTMLElement,
+		public readonly zIndex: number,
 		private readonly destroy: () => void
 	) {}
 
-	get instance(): C {
+	public get instance(): C {
 		return this.componentRef.instance;
 	}
 
-	get hostElement(): HTMLElement {
+	public get hostElement(): HTMLElement {
 		return this.componentRef.location.nativeElement as HTMLElement;
 	}
 
-	close(): void {
+	public close(): void {
 		if (this.destroyed) {
 			return;
 		}
@@ -68,9 +70,9 @@ export class PortalService {
 	private readonly environmentInjector = inject(EnvironmentInjector);
 	private readonly document = inject(DOCUMENT);
 
-	private nextZIndex = 1000;
+	private nextZIndex = Z_INDEX_START;
 
-	create<C>(component: Type<C>, config: PortalConfig = {}): PortalRef<C> {
+	public create<C>(component: Type<C>, config: PortalConfig = {}): PortalRef<C> {
 		const container = this.document.createElement('div');
 		const zIndex = this.nextZIndex++;
 

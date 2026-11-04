@@ -1,4 +1,5 @@
-import { Component, ElementRef, booleanAttribute, computed, inject, input } from '@angular/core';
+import { booleanAttribute, Component, computed, ElementRef, inject, input } from '@angular/core';
+
 import { Loader } from '../loader/loader';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'contrast' | 'neutral';
@@ -34,12 +35,13 @@ export type ButtonSize = 'small' | 'medium' | 'large';
 	},
 })
 export class Button {
-	readonly variant = input<ButtonVariant>('primary');
-	readonly size = input<ButtonSize>('medium');
-	readonly disabled = input(false, { transform: booleanAttribute });
-	readonly loading = input(false, { transform: booleanAttribute });
+	private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
-	protected readonly isNativeButton =
-		inject<ElementRef<HTMLElement>>(ElementRef).nativeElement.tagName === 'BUTTON';
+	public readonly variant = input<ButtonVariant>('primary');
+	public readonly size = input<ButtonSize>('medium');
+	public readonly disabled = input(false, { transform: booleanAttribute });
+	public readonly loading = input(false, { transform: booleanAttribute });
+
+	protected readonly isNativeButton = this.elementRef.nativeElement.tagName === 'BUTTON';
 	protected readonly isDisabled = computed(() => this.disabled() || this.loading());
 }

@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+
 import type { ModalRef } from './modal-ref';
 
 /** Функция закрытия модального окна, доступная внутри динамического компонента. */

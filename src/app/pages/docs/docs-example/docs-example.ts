@@ -1,4 +1,4 @@
-import { Component, booleanAttribute, input } from '@angular/core';
+import { booleanAttribute, Component, input } from '@angular/core';
 
 /**
  * Блок документации: заголовок, живой пример и его код.
@@ -9,7 +9,7 @@ import { Component, booleanAttribute, input } from '@angular/core';
 	templateUrl: './docs-example.html',
 })
 export class DocsExample {
-	readonly title = input.required<string>();
-	readonly code = input<string>();
-	readonly column = input(false, { transform: booleanAttribute });
+	public readonly title = input.required<string>();
+	public readonly code = input<string>();
+	public readonly column = input(false, { transform: booleanAttribute });
 }

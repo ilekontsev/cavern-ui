@@ -2,6 +2,7 @@ import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter, firstValueFrom } from 'rxjs';
+
 import { AuthService } from '../../core/auth/auth.service';
 import { Channel } from '../../core/channels/channel.models';
 import { ChannelService } from '../../core/channels/channel.service';

@@ -1,6 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+
 import { Login } from './auth/login/login';
 import { Register } from './auth/register/register';
 import { Channels } from './channels/channels';
@@ -8,6 +9,8 @@ import { Docs } from './docs/docs';
 import { Home } from './home/home';
 import { Profile } from './profile/profile';
 import { Sandbox } from './sandbox/sandbox';
+
+const REGISTER_INPUTS_COUNT = 3;
 
 describe('pages', () => {
 	beforeEach(async () => {
@@ -79,6 +82,6 @@ describe('pages', () => {
 		await fixture.whenStable();
 		const element = fixture.nativeElement as HTMLElement;
 
-		expect(element.querySelectorAll('input')).toHaveLength(3);
+		expect(element.querySelectorAll('input')).toHaveLength(REGISTER_INPUTS_COUNT);
 	});
 });

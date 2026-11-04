@@ -1,4 +1,5 @@
-import { Component, ElementRef, effect, input, model, viewChild } from '@angular/core';
+import { Component, effect, ElementRef, input, model, viewChild } from '@angular/core';
+
 import { Button } from '../button/button';
 import { Icon } from '../icon/icon';
 
@@ -18,8 +19,8 @@ let nextModalId = 0;
 	templateUrl: './modal.html',
 })
 export class Modal {
-	readonly open = model(false);
-	readonly title = input<string>();
+	public readonly open = model(false);
+	public readonly title = input<string>();
 
 	protected readonly titleId = `app-modal-title-${nextModalId++}`;
 	private readonly dialog = viewChild<ElementRef<HTMLDialogElement>>('dialog');

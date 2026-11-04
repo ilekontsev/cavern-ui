@@ -1,7 +1,8 @@
-import { Component, Injector, inject, signal } from '@angular/core';
+import { Component, inject, Injector, signal } from '@angular/core';
+
 import { Button, Modal, ModalService, Page } from '../../../ui-kit';
 import { DocsExample } from '../docs-example/docs-example';
-import { DocsModalContent, type DemoModalData } from './modal-content';
+import { type DemoModalData, DocsModalContent } from './modal-content';
 
 @Component({
 	imports: [Button, DocsExample, Modal, Page],
