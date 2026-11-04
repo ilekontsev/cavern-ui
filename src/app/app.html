@@ -11,10 +11,13 @@
 			>
 				Старт
 			</a>
+			<a class="shell__link" routerLink="/docs" routerLinkActive="shell__link--active"> Docs </a>
 			<a class="shell__link" routerLink="/profile" routerLinkActive="shell__link--active">
 				Профиль
 			</a>
-			<a class="shell__link" routerLink="/test" routerLinkActive="shell__link--active">Тест</a>
+			<a class="shell__link" routerLink="/sandbox" routerLinkActive="shell__link--active">
+				Песочница
+			</a>
 
 			@if (currentUser(); as user) {
 				<span class="shell__user">{{ user.login }}</span>

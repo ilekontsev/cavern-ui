@@ -1,0 +1,11 @@
+<section class="example">
+	<h2 class="example__title">{{ title() }}</h2>
+
+	<div class="example__preview" [class.example__preview--column]="column()">
+		<ng-content />
+	</div>
+
+	@if (code()) {
+		<pre class="example__code"><code>{{ code() }}</code></pre>
+	}
+</section>

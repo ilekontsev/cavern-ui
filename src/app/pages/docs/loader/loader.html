@@ -1,0 +1,38 @@
+<app-page
+	title="Loader"
+	subtitle="Индикатор загрузки с настраиваемым размером, цветом и толщиной кольца."
+>
+	<app-docs-example title="Базовый индикатор" [code]="code.basic">
+		<span app-loader></span>
+	</app-docs-example>
+
+	<app-docs-example title="Размеры" [code]="code.sizes">
+		<span app-loader style="--app-loader-size: 1rem"></span>
+		<span app-loader style="--app-loader-size: 1.5rem"></span>
+		<span app-loader style="--app-loader-size: 2rem"></span>
+		<span app-loader style="--app-loader-size: 3rem"></span>
+	</app-docs-example>
+
+	<app-docs-example title="Цвет и толщина" [code]="code.colors">
+		<span app-loader style="--app-loader-size: 2rem; --app-loader-color: #2f6fed"></span>
+		<span
+			app-loader
+			style="--app-loader-size: 2rem; --app-loader-color: #d9480f; --app-loader-thickness: 4px"
+		></span>
+	</app-docs-example>
+
+	<app-docs-example title="В кнопке" [code]="code.button">
+		<button app-button [loading]="loading()" type="button" (click)="loading.set(true)">
+			Сохранить
+		</button>
+
+		<button app-button variant="secondary" type="button" (click)="loading.set(false)">
+			Сбросить
+		</button>
+	</app-docs-example>
+
+	<app-docs-example title="В поле" [code]="code.field" column>
+		<app-input label="Поиск" loading />
+		<app-input label="Поиск" loading loadingPosition="start" />
+	</app-docs-example>
+</app-page>

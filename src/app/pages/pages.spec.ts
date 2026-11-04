@@ -3,9 +3,10 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Login } from './auth/login/login';
 import { Register } from './auth/register/register';
+import { Docs } from './docs/docs';
 import { Home } from './home/home';
 import { Profile } from './profile/profile';
-import { Test } from './test/test';
+import { Sandbox } from './sandbox/sandbox';
 
 describe('pages', () => {
 	beforeEach(async () => {
@@ -14,16 +15,12 @@ describe('pages', () => {
 		}).compileComponents();
 	});
 
-	it('home показывает ссылки на профиль и тест', async () => {
+	it('home показывает заголовок', async () => {
 		const fixture = TestBed.createComponent(Home);
 		await fixture.whenStable();
 		const element = fixture.nativeElement as HTMLElement;
 
 		expect(element.querySelector('h1')?.textContent).toContain('Cavern');
-		expect([...element.querySelectorAll('a')].map((link) => link.getAttribute('href'))).toEqual([
-			'/profile',
-			'/test',
-		]);
 	});
 
 	it('profile показывает заголовок раздела', async () => {
@@ -35,13 +32,26 @@ describe('pages', () => {
 		);
 	});
 
-	it('test показывает заголовок раздела', async () => {
-		const fixture = TestBed.createComponent(Test);
+	it('sandbox показывает заголовок раздела', async () => {
+		const fixture = TestBed.createComponent(Sandbox);
 		await fixture.whenStable();
 
 		expect((fixture.nativeElement as HTMLElement).querySelector('h1')?.textContent).toContain(
-			'Тест'
+			'Песочница'
 		);
+	});
+
+	it('docs показывает навигацию по компонентам', async () => {
+		const fixture = TestBed.createComponent(Docs);
+		await fixture.whenStable();
+		const links = [...(fixture.nativeElement as HTMLElement).querySelectorAll('.docs__link')];
+
+		expect(links.map((link) => link.textContent?.trim())).toEqual([
+			'Button',
+			'Input',
+			'Icon',
+			'Loader',
+		]);
 	});
 
 	it('login показывает поля логина и пароля', async () => {

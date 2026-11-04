@@ -3,6 +3,6 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
 	{
 		path: '',
-		loadComponent: () => import('./test').then((m) => m.Test),
+		loadComponent: () => import('./sandbox').then((m) => m.Sandbox),
 	},
 ];

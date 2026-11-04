@@ -10,8 +10,12 @@ export const routes: Routes = [
 		loadChildren: () => import('./pages/profile/profile.routes').then((m) => m.routes),
 	},
 	{
-		path: 'test',
-		loadChildren: () => import('./pages/test/test.routes').then((m) => m.routes),
+		path: 'docs',
+		loadChildren: () => import('./pages/docs/docs.routes').then((m) => m.routes),
+	},
+	{
+		path: 'sandbox',
+		loadChildren: () => import('./pages/sandbox/sandbox.routes').then((m) => m.routes),
 	},
 	{
 		path: 'login',

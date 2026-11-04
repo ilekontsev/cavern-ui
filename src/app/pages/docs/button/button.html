@@ -1,0 +1,54 @@
+<app-page
+	title="Button"
+	subtitle="Кнопка для действий и ссылок: варианты оформления, размеры, иконки и загрузка."
+>
+	<app-docs-example title="Варианты" [code]="code.variants">
+		<button app-button variant="primary" type="button">Primary</button>
+		<button app-button variant="secondary" type="button">Secondary</button>
+		<button app-button variant="tertiary" type="button">Tertiary</button>
+		<button app-button variant="contrast" type="button">Contrast</button>
+		<button app-button variant="neutral" type="button">Neutral</button>
+	</app-docs-example>
+
+	<app-docs-example title="Размеры" [code]="code.sizes">
+		<button app-button size="small" type="button">Small</button>
+		<button app-button size="medium" type="button">Medium</button>
+		<button app-button size="large" type="button">Large</button>
+	</app-docs-example>
+
+	<app-docs-example title="Иконки" [code]="code.icons">
+		<button app-button variant="primary" type="button">
+			<span app-icon="add"></span>
+			Создать
+		</button>
+
+		<button app-button variant="secondary" type="button">
+			Далее
+			<span app-icon="arrow_forward"></span>
+		</button>
+
+		<button app-button variant="neutral" type="button" aria-label="Удалить">
+			<span app-icon="delete"></span>
+		</button>
+	</app-docs-example>
+
+	<app-docs-example title="Загрузка и блокировка" [code]="code.loading">
+		<button
+			app-button
+			variant="primary"
+			type="button"
+			[loading]="loading()"
+			(click)="loading.set(true)"
+		>
+			<span app-icon="save"></span>
+			Сохранить
+		</button>
+
+		<button app-button variant="secondary" type="button" (click)="loading.set(false)">
+			Сбросить
+		</button>
+
+		<button app-button loading type="button">Всегда загружается</button>
+		<button app-button disabled type="button">Недоступно</button>
+	</app-docs-example>
+</app-page>

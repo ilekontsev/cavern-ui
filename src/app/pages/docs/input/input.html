@@ -1,0 +1,41 @@
+<app-page
+	title="Input"
+	subtitle="Текстовое поле с плавающей подписью, описанием, иконками, лоадером и ошибками."
+>
+	<app-docs-example title="Базовое поле" [code]="code.basic" column>
+		<app-input label="Почта" type="email" description="Мы не передаём адрес третьим лицам." />
+	</app-docs-example>
+
+	<app-docs-example title="Значение и подпись" [code]="code.value" column>
+		<app-input label="Имя" value="Анна" autocomplete="name" description="Поле уже заполнено." />
+	</app-docs-example>
+
+	<app-docs-example title="Иконки" [code]="code.icons" column>
+		<app-input label="Поиск" iconStart="search" iconEnd="close" />
+
+		<app-input
+			label="Фильтр"
+			[iconStart]="['search', 'filter_list']"
+			[iconEnd]="['visibility', 'more_vert']"
+		/>
+	</app-docs-example>
+
+	<app-docs-example title="Слоты для своих иконок" [code]="code.slots" column>
+		<app-input label="Поиск">
+			<span app-icon="search" appInputPrefix></span>
+			<span app-icon="tune" appInputSuffix></span>
+		</app-input>
+	</app-docs-example>
+
+	<app-docs-example title="Загрузка" [code]="code.loading" column>
+		<app-input label="Загрузка в конце" loading />
+		<app-input label="Загрузка в начале" loading loadingPosition="start" />
+		<app-input label="Лоадер вместо иконки" iconEnd="search" loading />
+	</app-docs-example>
+
+	<app-docs-example title="Состояния" [code]="code.states" column>
+		<app-input label="Недоступно" disabled />
+		<app-input label="Только для чтения" readonly value="Cavern" />
+		<app-input label="С ошибкой" [invalid]="true" [touched]="true" [errors]="errors" />
+	</app-docs-example>
+</app-page>

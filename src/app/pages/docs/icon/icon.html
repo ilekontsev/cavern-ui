@@ -1,0 +1,34 @@
+<app-page
+	title="Icon"
+	subtitle="Иконка на шрифте Material Symbols Rounded. Размер и цвет задаются CSS-переменными."
+>
+	<app-docs-example title="Базовое использование" [code]="code.basic">
+		@for (icon of icons; track icon) {
+			<span [app-icon]="icon"></span>
+		}
+	</app-docs-example>
+
+	<app-docs-example title="Размеры" [code]="code.sizes">
+		<span app-icon="home" style="--app-icon-size: 1rem"></span>
+		<span app-icon="home" style="--app-icon-size: 1.5rem"></span>
+		<span app-icon="home" style="--app-icon-size: 2rem"></span>
+		<span app-icon="home" style="--app-icon-size: 3rem"></span>
+	</app-docs-example>
+
+	<app-docs-example title="Цвет" [code]="code.colors">
+		<span app-icon="favorite" style="--app-icon-size: 2rem; --app-icon-color: #2f6fed"></span>
+		<span app-icon="favorite" style="--app-icon-size: 2rem; --app-icon-color: #2f9e44"></span>
+		<span app-icon="favorite" style="--app-icon-size: 2rem; --app-icon-color: #d9480f"></span>
+	</app-docs-example>
+
+	<app-docs-example title="В кнопке" [code]="code.button">
+		<button app-button variant="primary" type="button">
+			<span app-icon="add"></span>
+			Создать
+		</button>
+	</app-docs-example>
+
+	<app-docs-example title="В поле" [code]="code.field" column>
+		<app-input label="Поиск" iconStart="search" iconEnd="close" />
+	</app-docs-example>
+</app-page>
