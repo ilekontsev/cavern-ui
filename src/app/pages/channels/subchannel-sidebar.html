@@ -1,0 +1,50 @@
+<aside class="subchannel-sidebar">
+	<p class="subchannel-sidebar__title">Подканалы</p>
+
+	<nav class="subchannel-sidebar__nav" aria-label="Подканалы канала">
+		@for (group of groups; track group.id) {
+			<div class="subchannel-sidebar__group">
+				<button
+					class="subchannel-sidebar__group-title"
+					type="button"
+					[attr.aria-expanded]="!isGroupCollapsed(group.id)"
+					(click)="toggleGroup(group.id)"
+				>
+					<span
+						class="subchannel-sidebar__group-icon"
+						[class.subchannel-sidebar__group-icon--collapsed]="isGroupCollapsed(group.id)"
+						app-icon="keyboard_arrow_down"
+					></span>
+					{{ group.name }}
+				</button>
+
+				@if (!isGroupCollapsed(group.id)) {
+					<ul class="subchannel-sidebar__list">
+						@for (subchannel of group.subchannels; track subchannel.id) {
+							<li>
+								<a
+									class="subchannel-sidebar__link"
+									[class.subchannel-sidebar__link--unread]="subchannel.unread"
+									[routerLink]="[routeUrls.channels, channelId(), subchannel.id]"
+									routerLinkActive="subchannel-sidebar__link--active"
+								>
+									@if (subchannel.kind === 'voice') {
+										<span class="subchannel-sidebar__icon" app-icon="volume_up"></span>
+									} @else {
+										<span class="subchannel-sidebar__hash" aria-hidden="true">#</span>
+									}
+
+									<span class="subchannel-sidebar__name">{{ subchannel.name }}</span>
+
+									@if (subchannel.unread) {
+										<span class="subchannel-sidebar__dot" aria-label="Есть новые сообщения"></span>
+									}
+								</a>
+							</li>
+						}
+					</ul>
+				}
+			</div>
+		}
+	</nav>
+</aside>

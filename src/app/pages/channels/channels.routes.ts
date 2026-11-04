@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { CHANNELS_ROUTE_SEGMENTS, ROUTE_SEGMENTS } from '../../core/routes';
+import { DEFAULT_SUBCHANNEL_ID } from '../../core/channels/channel.constants';
+import { CHANNELS_ROUTE_SEGMENTS, ROUTE_SEGMENTS, ROUTE_URLS } from '../../core/routes';
 
 export const routes: Routes = [
 	{
@@ -20,8 +21,16 @@ export const routes: Routes = [
 				loadComponent: () => import('./channel-search').then((m) => m.ChannelSearch),
 			},
 			{
-				path: ':id',
+				path: ':id/:subchannelId',
 				loadComponent: () => import('./channel-detail').then((m) => m.ChannelDetail),
+			},
+			{
+				// Канал всегда открывается на подканале: так при переключении
+				// подканалов компонент страницы не пересоздаётся.
+				path: ':id',
+				pathMatch: 'full',
+				redirectTo: ({ params }) =>
+					`${ROUTE_URLS.channels}/${params['id']}/${DEFAULT_SUBCHANNEL_ID}`,
 			},
 		],
 	},

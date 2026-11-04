@@ -155,6 +155,16 @@ function toPublicChannel(record, user) {
 	};
 }
 
+function toPublicMember(db, channel, memberId) {
+	const record = db.users.find((user) => user.id === memberId);
+
+	return {
+		id: memberId,
+		login: record ? record.login : 'Гость',
+		isOwner: channel.ownerId === memberId,
+	};
+}
+
 function parseCookies(request) {
 	const header = request.headers.cookie;
 
@@ -443,6 +453,66 @@ function handleJoinChannel(request, response, channelId) {
 	sendJson(response, 200, { channel: toPublicChannel(channel, user) });
 }
 
+function sendChannelMembers(response, db, channel) {
+	const members = Array.isArray(channel.members) ? channel.members : [];
+
+	sendJson(response, 200, {
+		members: members.map((memberId) => toPublicMember(db, channel, memberId)),
+	});
+}
+
+function handleListChannelMembers(response, channelId) {
+	const db = readDb();
+	const channel = readChannels(db).find((item) => item.id === channelId);
+
+	if (!channel) {
+		sendJson(response, 404, { code: 'channelNotFound' });
+		return;
+	}
+
+	sendChannelMembers(response, db, channel);
+}
+
+function handleRemoveChannelMember(request, response, channelId, memberId) {
+	const user = getAuthUser(request);
+
+	if (!user) {
+		sendJson(response, 401, { code: 'unauthorized' });
+		return;
+	}
+
+	const db = readDb();
+	const channel = readChannels(db).find((item) => item.id === channelId);
+
+	if (!channel) {
+		sendJson(response, 404, { code: 'channelNotFound' });
+		return;
+	}
+
+	if (channel.ownerId !== user.id) {
+		sendJson(response, 403, { code: 'notOwner' });
+		return;
+	}
+
+	if (memberId === channel.ownerId) {
+		sendJson(response, 400, { code: 'cannotRemoveOwner' });
+		return;
+	}
+
+	channel.members = Array.isArray(channel.members) ? channel.members : [];
+	const index = channel.members.indexOf(memberId);
+
+	if (index === -1) {
+		sendJson(response, 404, { code: 'memberNotFound' });
+		return;
+	}
+
+	channel.members.splice(index, 1);
+	writeDb(db);
+
+	sendChannelMembers(response, db, channel);
+}
+
 function handleDeleteChannel(request, response, channelId) {
 	const user = getAuthUser(request);
 
@@ -523,6 +593,25 @@ const server = http.createServer(async (request, response) => {
 
 		if (joinMatch && method === 'POST') {
 			handleJoinChannel(request, response, decodeURIComponent(joinMatch[1]));
+			return;
+		}
+
+		const membersMatch = /^\/channels\/([^/]+)\/members$/.exec(pathname);
+
+		if (membersMatch && method === 'GET') {
+			handleListChannelMembers(response, decodeURIComponent(membersMatch[1]));
+			return;
+		}
+
+		const memberMatch = /^\/channels\/([^/]+)\/members\/([^/]+)$/.exec(pathname);
+
+		if (memberMatch && method === 'DELETE') {
+			handleRemoveChannelMember(
+				request,
+				response,
+				decodeURIComponent(memberMatch[1]),
+				decodeURIComponent(memberMatch[2])
+			);
 			return;
 		}
 

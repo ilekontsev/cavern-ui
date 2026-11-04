@@ -4,40 +4,91 @@
 			<p class="channel-detail__muted">Загрузка…</p>
 		</app-card>
 	} @else if (channel(); as channel) {
-		<app-card>
-			<p class="channel-detail__description">
-				{{ channel.description || 'Описание не задано.' }}
-			</p>
+		<div class="channel-detail">
+			<app-subchannel-sidebar class="channel-detail__subchannels" [channelId]="channel.id" />
 
-			<dl class="channel-detail__meta">
-				<div class="channel-detail__meta-row">
-					<dt class="channel-detail__term">Владелец</dt>
-					<dd class="channel-detail__value">{{ channel.ownerLogin }}</dd>
-				</div>
-				<div class="channel-detail__meta-row">
-					<dt class="channel-detail__term">Участников</dt>
-					<dd class="channel-detail__value">{{ channel.membersCount }}</dd>
-				</div>
-			</dl>
+			<div class="channel-detail__main">
+				<app-card>
+					<p class="channel-detail__description">
+						{{ channel.description || 'Описание не задано.' }}
+					</p>
 
-			@if (error()) {
-				<p class="channel-detail__error">{{ error() }}</p>
-			}
+					<dl class="channel-detail__meta">
+						<div class="channel-detail__meta-row">
+							<dt class="channel-detail__term">Владелец</dt>
+							<dd class="channel-detail__value">{{ channel.ownerLogin }}</dd>
+						</div>
+						<div class="channel-detail__meta-row">
+							<dt class="channel-detail__term">Участников</dt>
+							<dd class="channel-detail__value">{{ channel.membersCount }}</dd>
+						</div>
+					</dl>
 
-			@if (channel.isOwner) {
-				<button
-					app-button
-					class="channel-detail__delete"
-					variant="neutral"
-					size="small"
-					type="button"
-					[loading]="deleting()"
-					(click)="deleteChannel()"
-				>
-					Удалить канал
-				</button>
-			}
-		</app-card>
+					@if (error()) {
+						<p class="channel-detail__error">{{ error() }}</p>
+					}
+
+					@if (channel.isOwner) {
+						<button
+							app-button
+							class="channel-detail__delete"
+							variant="neutral"
+							size="small"
+							type="button"
+							[loading]="deleting()"
+							(click)="deleteChannel()"
+						>
+							Удалить канал
+						</button>
+					}
+				</app-card>
+			</div>
+
+			<aside class="channel-detail__members">
+				<h2 class="channel-detail__members-title">
+					<span>Участники</span>
+					<span class="channel-detail__members-count">{{ channel.membersCount }}</span>
+				</h2>
+
+				@if (membersLoading()) {
+					<p class="channel-detail__muted">Загрузка…</p>
+				} @else if (members().length) {
+					<ul class="channel-detail__members-list">
+						@for (member of members(); track member.id) {
+							<li class="channel-detail__member">
+								<span class="channel-detail__avatar" aria-hidden="true">
+									{{ initials(member.login) }}
+								</span>
+								<span class="channel-detail__member-login">{{ member.login }}</span>
+
+								@if (member.isOwner) {
+									<span class="channel-detail__owner">владелец</span>
+								} @else if (channel.isOwner) {
+									<button
+										class="channel-detail__member-remove"
+										type="button"
+										[attr.aria-label]="'Удалить участника ' + member.login"
+										[attr.title]="'Удалить участника ' + member.login"
+										[disabled]="removingMemberId() === member.id"
+										(click)="removeMember(member)"
+									>
+										<span app-icon="person_remove"></span>
+									</button>
+								}
+							</li>
+						}
+					</ul>
+				} @else {
+					@if (!membersError()) {
+						<p class="channel-detail__muted">Пока никого нет.</p>
+					}
+				}
+
+				@if (membersError(); as membersError) {
+					<p class="channel-detail__error">{{ membersError }}</p>
+				}
+			</aside>
+		</div>
 	} @else {
 		<app-card heading="Канал не найден">
 			<p class="channel-detail__muted">{{ error() }}</p>

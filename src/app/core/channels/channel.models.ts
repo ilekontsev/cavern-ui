@@ -13,6 +13,14 @@ export interface Channel {
 	isMember: boolean;
 }
 
+/** Участник канала в том виде, в котором его отдаёт mock API. */
+export interface ChannelMember {
+	id: string;
+	login: string;
+	/** Этот участник — владелец канала. */
+	isOwner: boolean;
+}
+
 export interface ChannelCreatePayload {
 	name: string;
 	description: string;
@@ -24,4 +32,8 @@ export interface ChannelListResponse {
 
 export interface ChannelResponse {
 	channel: Channel;
+}
+
+export interface ChannelMembersResponse {
+	members: ChannelMember[];
 }

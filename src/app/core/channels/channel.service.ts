@@ -7,6 +7,8 @@ import {
 	Channel,
 	ChannelCreatePayload,
 	ChannelListResponse,
+	ChannelMember,
+	ChannelMembersResponse,
 	ChannelResponse,
 } from './channel.models';
 
@@ -42,6 +44,27 @@ export class ChannelService {
 				withCredentials: true,
 			})
 			.pipe(map(({ channel }) => channel));
+	}
+
+	/** Участники канала. */
+	public members(id: string): Observable<ChannelMember[]> {
+		return this.http
+			.get<ChannelMembersResponse>(`${CHANNELS_URL}/${encodeURIComponent(id)}/members`, {
+				withCredentials: true,
+			})
+			.pipe(map(({ members }) => members));
+	}
+
+	/** Удалить участника из канала. Доступно только владельцу. */
+	public removeMember(id: string, memberId: string): Observable<ChannelMember[]> {
+		return this.http
+			.delete<ChannelMembersResponse>(
+				`${CHANNELS_URL}/${encodeURIComponent(id)}/members/${encodeURIComponent(memberId)}`,
+				{
+					withCredentials: true,
+				}
+			)
+			.pipe(map(({ members }) => members));
 	}
 
 	public create(payload: ChannelCreatePayload): Observable<Channel> {

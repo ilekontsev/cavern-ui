@@ -1,16 +1,16 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, firstValueFrom } from 'rxjs';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { Channel } from '../../core/channels/channel.models';
 import { ChannelService } from '../../core/channels/channel.service';
 import { ROUTE_URLS } from '../../core/routes';
-import { Button, Icon } from '../../ui-kit';
+import { ChannelSidebar } from './channel-sidebar';
 
 @Component({
-	imports: [Button, Icon, RouterLink, RouterLinkActive, RouterOutlet],
+	imports: [ChannelSidebar, RouterOutlet],
 	selector: 'app-channels',
 	styleUrl: './channels.scss',
 	templateUrl: './channels.html',

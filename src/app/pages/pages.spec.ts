@@ -50,9 +50,10 @@ describe('pages', () => {
 
 		fixture.detectChanges();
 
-		expect(
-			(fixture.nativeElement as HTMLElement).querySelector('.channels__title')?.textContent
-		).toContain('Каналы');
+		const element = fixture.nativeElement as HTMLElement;
+
+		expect(element.querySelector('app-channel-sidebar')).not.toBeNull();
+		expect(element.querySelector('.channel-sidebar__title')?.textContent).toContain('Каналы');
 	});
 
 	it('docs показывает навигацию по компонентам', async () => {
