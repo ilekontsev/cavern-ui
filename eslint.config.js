@@ -8,7 +8,7 @@ const simpleImportSort = require('eslint-plugin-simple-import-sort');
 
 module.exports = defineConfig([
 	{
-		ignores: ['**/*.spec.ts', '**/*.js'],
+		ignores: ['**/*.js'],
 	},
 	{
 		files: ['**/*.ts'],
@@ -81,6 +81,17 @@ module.exports = defineConfig([
 			// Единый порядок импортов и экспортов.
 			'simple-import-sort/imports': 'error',
 			'simple-import-sort/exports': 'error',
+		},
+	},
+	{
+		// Тесты пишутся свободнее: не требуем явных типов/модификаторов доступа
+		// и разрешаем магические числа в проверках.
+		files: ['**/*.spec.ts'],
+		rules: {
+			'@typescript-eslint/explicit-member-accessibility': 'off',
+			'@typescript-eslint/explicit-function-return-type': 'off',
+			'@typescript-eslint/no-magic-numbers': 'off',
+			'no-restricted-syntax': 'off',
 		},
 	},
 	{
