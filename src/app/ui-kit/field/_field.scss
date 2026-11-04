@@ -51,6 +51,7 @@
 	display: flex;
 	flex: 0 0 auto;
 	align-items: center;
+	gap: 0.5rem;
 	color: var(--cavern-muted, #5b6472);
 
 	&:empty {

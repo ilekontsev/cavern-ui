@@ -9,6 +9,8 @@ export type ButtonSize = 'small' | 'medium' | 'large';
  * Используется на нативном `<button>` или `<a>`:
  * `<button app-button variant="primary">…</button>`
  * `<a app-button variant="secondary" routerLink="/profile">…</a>`
+ *
+ * Иконки добавляются директивой `app-icon` прямо в контент кнопки.
  */
 @Component({
 	// Кнопка намеренно применяется к нативным <button> и <a>, поэтому селектор атрибутный.

@@ -1,3 +1,52 @@
 <app-page title="Тест" subtitle="Песочница для проверок и экспериментов.">
 	<p class="test__text">Здесь можно проверять новые компоненты и логику.</p>
+
+	<section class="test__section">
+		<h2 class="test__heading">Кнопки с иконками</h2>
+
+		<div class="test__row">
+			<button app-button variant="primary" type="button">
+				<span app-icon="add"></span>
+				Создать
+			</button>
+
+			<button app-button variant="secondary" type="button">
+				Далее
+				<span app-icon="arrow_forward"></span>
+			</button>
+
+			<button app-button variant="neutral" type="button" aria-label="Удалить">
+				<span app-icon="delete"></span>
+			</button>
+
+			<button
+				app-button
+				variant="tertiary"
+				type="button"
+				style="--app-icon-size: 1.25rem; --app-icon-color: #d9480f"
+			>
+				<span app-icon="favorite"></span>
+				В избранное
+			</button>
+		</div>
+	</section>
+
+	<section class="test__section">
+		<h2 class="test__heading">Поля с иконками</h2>
+
+		<div class="test__grid">
+			<app-input label="Поиск" iconStart="search" iconEnd="close" />
+
+			<app-input
+				label="Фильтр"
+				[iconStart]="['search', 'filter_list']"
+				[iconEnd]="['visibility', 'more_vert']"
+			/>
+
+			<app-input label="Свои стили" style="--app-icon-size: 1.5rem; --app-icon-color: #2f6fed">
+				<span app-icon="search" appInputPrefix></span>
+				<span app-icon="tune" appInputSuffix style="--app-icon-color: #d9480f"></span>
+			</app-input>
+		</div>
+	</section>
 </app-page>

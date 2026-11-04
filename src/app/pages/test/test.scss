@@ -3,3 +3,29 @@
 	font-size: 0.9rem;
 	color: var(--cavern-muted);
 }
+
+.test__section {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin-top: 2rem;
+}
+
+.test__heading {
+	margin: 0;
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+.test__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.test__grid {
+	display: grid;
+	gap: 1rem;
+	max-width: 28rem;
+}

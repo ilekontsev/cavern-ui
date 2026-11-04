@@ -53,8 +53,91 @@ Fallback-значения — светлая схема, то есть пове�
 | Компонент | Селектор    | Назначение                                                |
 | --------- | ----------- | --------------------------------------------------------- |
 | `Card`    | `app-card`  | Карточка-контейнер с необязательным заголовком            |
+| `Icon`    | `app-icon`  | Иконка-директива по названию из Material Symbols Rounded  |
 | `Input`   | `app-input` | Текстовое поле с плавающей подписью, описанием и ошибками |
 | `Page`    | `app-page`  | Каркас страницы: заголовок, подзаголовок, контент         |
+
+## Иконки
+
+`Icon` — атрибутная директива: вешается на любой пустой тег и принимает только
+название иконки.
+
+```html
+<span app-icon="home"></span> <i app-icon="arrow_forward"></i>
+```
+
+Иконки рисуются лигатурами шрифта Material Symbols Rounded. Директива сама
+подставляет название в элемент, поэтому внутри него не должно быть контента.
+Сам шрифт подключается приложением в `src/index.html`; если `ui-kit` выносится
+в отдельную библиотеку, шрифт нужно подключить на стороне приложения.
+
+Директиву нужно добавить в `imports` компонента, где она используется:
+
+```ts
+import { Icon } from '../../ui-kit';
+
+@Component({ imports: [Icon], /* … */ })
+```
+
+Размер и цвет иконки задаются CSS-переменными:
+
+```html
+<span app-icon="home" style="--app-icon-size: 2rem; --app-icon-color: #2f6fed"></span>
+```
+
+- `--app-icon-size` — размер, по умолчанию `1.25em` (масштабируется от
+  размера текста);
+- `--app-icon-color` — цвет, по умолчанию `currentColor`.
+
+В кнопку иконка добавляется директивой прямо в контент — до или после текста:
+
+```html
+<button app-button>
+	<span app-icon="add"></span>
+	Создать
+</button>
+
+<button app-button variant="secondary">
+	Далее
+	<span app-icon="arrow_forward"></span>
+</button>
+
+<button app-button aria-label="Удалить">
+	<span app-icon="delete"></span>
+</button>
+```
+
+У поля иконки задаются через `iconStart` и `iconEnd` — внутри рамки в начале и в
+конце. В оба можно передать массив, если иконок нужно несколько:
+
+```html
+<app-input label="Поиск" iconStart="search" iconEnd="close" />
+
+<app-input
+	label="Фильтр"
+	[iconStart]="['search', 'filter_list']"
+	[iconEnd]="['visibility', 'more_vert']"
+/>
+```
+
+Если иконкам нужно разное оформление, используйте слоты поля: они попадают в те
+же зоны, что и `iconStart`/`iconEnd`, но позволяют задать стили каждой иконке.
+
+```html
+<app-input label="Поиск">
+	<span app-icon="search" appInputPrefix></span>
+	<span app-icon="filter_list" appInputPrefix style="--app-icon-color: #2f6fed"></span>
+</app-input>
+```
+
+Переменные можно задать и на кнопке или поле — иконки их унаследуют:
+
+```html
+<button app-button style="--app-icon-size: 1rem">
+	<span app-icon="add"></span>
+	Создать
+</button>
+```
 
 ## Общие стили полей
 

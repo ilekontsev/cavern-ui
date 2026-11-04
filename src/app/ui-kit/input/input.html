@@ -1,6 +1,11 @@
 <div class="field" [class.field--floated]="!!value()" [class.field--invalid]="showErrors()">
 	<div class="field__box">
-		<span class="field__prefix"><ng-content select="[appInputPrefix]" /></span>
+		<span class="field__prefix">
+			@for (icon of startIcons(); track $index) {
+				<span [app-icon]="icon"></span>
+			}
+			<ng-content select="[appInputPrefix]" />
+		</span>
 
 		<div class="field__main">
 			<input
@@ -22,7 +27,12 @@
 			<label class="field__label" [for]="controlId()">{{ label() }}</label>
 		</div>
 
-		<span class="field__suffix"><ng-content select="[appInputSuffix]" /></span>
+		<span class="field__suffix">
+			<ng-content select="[appInputSuffix]" />
+			@for (icon of endIcons(); track $index) {
+				<span [app-icon]="icon"></span>
+			}
+		</span>
 	</div>
 
 	@if (showErrors()) {
