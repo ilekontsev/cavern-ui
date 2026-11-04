@@ -1,0 +1,84 @@
+<app-page title="Поиск каналов" subtitle="Найдите канал и присоединитесь к нему.">
+	<app-card>
+		<form class="channel-search-form" (submit)="submit($event)">
+			<app-input
+				inputId="channel-search"
+				label="Название или описание"
+				iconStart="search"
+				[(value)]="searchQuery"
+			/>
+
+			<button app-button variant="secondary" size="medium" type="submit" [loading]="loading()">
+				Найти
+			</button>
+		</form>
+
+		@if (error()) {
+			<p class="channel-search-error u-text-danger">{{ error() }}</p>
+		}
+
+		@if (loading()) {
+			<p class="channel-search-note u-text-muted">Загрузка…</p>
+		} @else if (channels().length) {
+			<ul class="channel-search-list flow u-list-none">
+				@for (channel of channels(); track channel.id) {
+					<li class="channel-search-item">
+						<div class="channel-search-info">
+							<h2 class="channel-search-name">{{ channel.name }}</h2>
+							@if (channel.description) {
+								<p class="channel-search-description u-text-muted">
+									{{ channel.description }}
+								</p>
+							}
+							<p class="channel-search-meta u-text-muted">
+								Владелец: {{ channel.ownerLogin }} · Участников:
+								{{ channel.membersCount }}
+							</p>
+						</div>
+
+						<div class="channel-search-actions cluster">
+							@if (channel.isOwner) {
+								<span class="channel-search-badge u-text-muted">Ваш канал</span>
+							} @else if (channel.isMember) {
+								<span class="channel-search-badge u-text-muted">Вы участник</span>
+							}
+
+							@if (channel.isMember) {
+								<a
+									app-button
+									variant="secondary"
+									size="small"
+									[routerLink]="[routeUrls.channels, channel.id]"
+								>
+									Открыть
+								</a>
+							} @else {
+								<button
+									app-button
+									variant="primary"
+									size="small"
+									type="button"
+									[loading]="actionId() === channel.id"
+									(click)="join(channel)"
+								>
+									Присоединиться
+								</button>
+							}
+						</div>
+					</li>
+				}
+			</ul>
+		} @else {
+			<p class="channel-search-note u-text-muted">Каналы не найдены.</p>
+		}
+
+		@if (!auth.isAuthenticated()) {
+			<p class="channel-search-hint u-text-muted">
+				Гости могут находить каналы и присоединяться к ним.
+				<a class="u-text-accent" [routerLink]="routeUrls.login">Войдите</a> или
+				<a class="u-text-accent" [routerLink]="routeUrls.register">зарегистрируйтесь</a>, чтобы
+				создавать свои каналы.
+			</p>
+		}
+	</app-card>
+</app-page>

@@ -18,7 +18,8 @@ export class DocsButton {
 <button app-button variant="contrast" type="button">Contrast</button>
 <button app-button variant="neutral" type="button">Neutral</button>`,
 
-		sizes: `<button app-button size="small" type="button">Small</button>
+		sizes: `<button app-button size="extra-small" type="button">Extra small</button>
+<button app-button size="small" type="button">Small</button>
 <button app-button size="medium" type="button">Medium</button>
 <button app-button size="large" type="button">Large</button>`,
 

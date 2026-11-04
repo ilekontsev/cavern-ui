@@ -1,4 +1,10 @@
-// Размеры кнопки: small 36px, medium 40px, large 48px.
+// Размеры кнопки: extra-small 32px, small 36px, medium 40px, large 48px.
+:host([data-size='extra-small']) {
+	height: 32px;
+	padding-inline: 0.65rem;
+	font-size: 0.875rem;
+}
+
 :host([data-size='small']) {
 	height: 36px;
 	padding-inline: 0.75rem;

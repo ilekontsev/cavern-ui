@@ -1,0 +1,90 @@
+<aside class="channel-sidebar">
+	<div class="channel-sidebar-header">
+		<p class="channel-sidebar-title u-text-muted">Каналы</p>
+
+		<button
+			class="channel-sidebar-toggle u-text-muted"
+			type="button"
+			[attr.aria-expanded]="expanded()"
+			[attr.aria-label]="expanded() ? 'Свернуть меню каналов' : 'Развернуть меню каналов'"
+			[app-tooltip]="expanded() ? null : 'Развернуть'"
+			(click)="toggle()"
+		>
+			<span [app-icon]="expanded() ? 'chevron_left' : 'chevron_right'"></span>
+		</button>
+	</div>
+
+	<nav class="channel-sidebar-actions flow" aria-label="Действия с каналами">
+		<a
+			app-button
+			variant="secondary"
+			size="extra-small"
+			class="channel-sidebar-action row"
+			[routerLink]="routeUrls.channelsNew"
+			routerLinkActive
+			ariaCurrentWhenActive="page"
+			aria-label="Добавить канал"
+			[app-tooltip]="expanded() ? null : 'Добавить'"
+		>
+			<span app-icon="add"></span>
+			<span class="channel-sidebar-action-label">Добавить</span>
+		</a>
+
+		<a
+			app-button
+			variant="secondary"
+			size="extra-small"
+			class="channel-sidebar-action row"
+			[routerLink]="routeUrls.channelsSearch"
+			routerLinkActive
+			ariaCurrentWhenActive="page"
+			aria-label="Найти канал"
+			[app-tooltip]="expanded() ? null : 'Поиск'"
+		>
+			<span app-icon="search"></span>
+			<span class="channel-sidebar-action-label">Поиск</span>
+		</a>
+	</nav>
+
+	<nav class="channel-sidebar-nav flow" aria-label="Мои каналы">
+		@if (loading()) {
+			<p class="channel-sidebar-status row">
+				<span class="channel-sidebar-status-loader" app-loader></span>
+				<span class="channel-sidebar-status-label">Загрузка…</span>
+			</p>
+		} @else if (channels().length) {
+			@for (channel of channels(); track channel.id) {
+				<a
+					class="channel-sidebar-link row u-text-muted"
+					[routerLink]="[routeUrls.channels, channel.id]"
+					routerLinkActive
+					ariaCurrentWhenActive="page"
+					[attr.aria-label]="channel.name"
+					[app-tooltip]="expanded() ? null : channel.name"
+				>
+					<span class="channel-sidebar-avatar" aria-hidden="true">
+						{{ initials(channel.name) }}
+					</span>
+					<span class="channel-sidebar-link-label">
+						<span class="channel-sidebar-name u-truncate">{{ channel.name }}</span>
+						@if (channel.isOwner) {
+							<span class="channel-sidebar-owner u-text-muted">владелец</span>
+						}
+					</span>
+				</a>
+			}
+		} @else {
+			<p class="channel-sidebar-status row" [app-tooltip]="expanded() ? null : 'Пока нет каналов'">
+				<span class="channel-sidebar-status-icon" app-icon="forum"></span>
+				<span class="channel-sidebar-status-label">Пока нет каналов.</span>
+			</p>
+		}
+	</nav>
+
+	@if (error(); as error) {
+		<p class="channel-sidebar-status row" data-error [app-tooltip]="expanded() ? null : error">
+			<span class="channel-sidebar-status-icon" app-icon="error"></span>
+			<span class="channel-sidebar-status-label">{{ error }}</span>
+		</p>
+	}
+</aside>

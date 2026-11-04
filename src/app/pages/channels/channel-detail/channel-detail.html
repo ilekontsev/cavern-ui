@@ -1,0 +1,105 @@
+<app-page [title]="channel()?.name ?? 'Канал'" subtitle="Страница канала.">
+	@if (loading()) {
+		<app-card>
+			<p class="channel-detail-note u-text-muted">Загрузка…</p>
+		</app-card>
+	} @else if (channel(); as channel) {
+		<div class="channel-detail-layout">
+			<app-subchannel-sidebar [channelId]="channel.id" />
+
+			<div class="channel-detail-main">
+				<app-card>
+					<p class="channel-detail-description">
+						{{ channel.description || 'Описание не задано.' }}
+					</p>
+
+					<dl class="channel-detail-meta flow">
+						<div class="channel-detail-meta-row">
+							<dt class="channel-detail-term u-text-muted">Владелец</dt>
+							<dd class="channel-detail-value">{{ channel.ownerLogin }}</dd>
+						</div>
+						<div class="channel-detail-meta-row">
+							<dt class="channel-detail-term u-text-muted">Участников</dt>
+							<dd class="channel-detail-value">{{ channel.membersCount }}</dd>
+						</div>
+					</dl>
+
+					@if (error()) {
+						<p class="channel-detail-error u-text-danger">{{ error() }}</p>
+					}
+
+					@if (channel.isOwner) {
+						<button
+							app-button
+							class="channel-detail-delete"
+							variant="neutral"
+							size="small"
+							type="button"
+							[loading]="deleting()"
+							(click)="deleteChannel()"
+						>
+							Удалить канал
+						</button>
+					}
+				</app-card>
+			</div>
+
+			<aside class="channel-detail-members">
+				<h2 class="channel-detail-members-title u-text-muted">
+					<span>Участники</span>
+					<span class="channel-detail-members-count">{{ channel.membersCount }}</span>
+				</h2>
+
+				@if (membersLoading()) {
+					<p class="channel-detail-note u-text-muted">Загрузка…</p>
+				} @else if (members().length) {
+					<ul class="channel-detail-members-list flow u-list-none">
+						@for (member of members(); track member.id) {
+							<li class="channel-detail-member">
+								<span class="channel-detail-avatar" aria-hidden="true">
+									{{ initials(member.login) }}
+								</span>
+								<span class="channel-detail-member-login u-truncate">
+									{{ member.login }}
+								</span>
+
+								@if (member.isOwner) {
+									<span class="channel-detail-owner u-text-muted u-ml-auto"> владелец </span>
+								} @else if (channel.isOwner) {
+									<button
+										app-button
+										variant="tertiary"
+										size="extra-small"
+										class="channel-detail-member-remove u-ml-auto"
+										type="button"
+										[attr.aria-label]="'Удалить участника ' + member.login"
+										[attr.title]="'Удалить участника ' + member.login"
+										[disabled]="removingMemberId() === member.id"
+										(click)="removeMember(member)"
+									>
+										<span app-icon="person_remove"></span>
+									</button>
+								}
+							</li>
+						}
+					</ul>
+				} @else {
+					@if (!membersError()) {
+						<p class="channel-detail-note u-text-muted">Пока никого нет.</p>
+					}
+				}
+
+				@if (membersError(); as membersError) {
+					<p class="channel-detail-error u-text-danger">{{ membersError }}</p>
+				}
+			</aside>
+		</div>
+	} @else {
+		<app-card heading="Канал не найден">
+			<p class="channel-detail-note u-text-muted">{{ error() }}</p>
+			<a app-button variant="secondary" size="small" [routerLink]="routeUrls.channels">
+				К каналам
+			</a>
+		</app-card>
+	}
+</app-page>

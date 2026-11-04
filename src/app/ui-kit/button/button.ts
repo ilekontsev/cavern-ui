@@ -3,7 +3,7 @@ import { booleanAttribute, Component, computed, ElementRef, inject, input } from
 import { Loader } from '../loader/loader';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'contrast' | 'neutral';
-export type ButtonSize = 'small' | 'medium' | 'large';
+export type ButtonSize = 'extra-small' | 'small' | 'medium' | 'large';
 
 /**
  * Кнопка ui-kit.

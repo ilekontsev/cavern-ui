@@ -1,9 +1,9 @@
 import { Component, input, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { DEFAULT_SUBCHANNEL_ID } from '../../core/channels/channel.constants';
-import { ROUTE_URLS } from '../../core/routes';
-import { Icon } from '../../ui-kit';
+import { DEFAULT_SUBCHANNEL_ID } from '../../../../core/channels/channel.constants';
+import { ROUTE_URLS } from '../../../../core/routes';
+import { Icon } from '../../../../ui-kit';
 
 interface Subchannel {
 	id: string;

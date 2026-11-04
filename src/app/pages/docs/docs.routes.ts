@@ -32,6 +32,10 @@ export const routes: Routes = [
 				path: DOCS_ROUTE_SEGMENTS.modal,
 				loadComponent: () => import('./modal/modal').then((m) => m.DocsModal),
 			},
+			{
+				path: DOCS_ROUTE_SEGMENTS.tooltip,
+				loadComponent: () => import('./tooltip/tooltip').then((m) => m.DocsTooltip),
+			},
 		],
 	},
 ];

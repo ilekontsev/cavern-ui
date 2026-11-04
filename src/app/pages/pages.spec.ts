@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 
 import { Login } from './auth/login/login';
 import { Register } from './auth/register/register';
-import { Channels } from './channels/channels';
+import { ChannelsLayout } from './channels/layouts/channels-layout/channels-layout';
 import { Docs } from './docs/docs';
 import { Home } from './home/home';
 import { Profile } from './profile/profile';
@@ -46,14 +46,14 @@ describe('pages', () => {
 	});
 
 	it('channels показывает боковое меню', async () => {
-		const fixture = TestBed.createComponent(Channels);
+		const fixture = TestBed.createComponent(ChannelsLayout);
 
 		fixture.detectChanges();
 
 		const element = fixture.nativeElement as HTMLElement;
 
 		expect(element.querySelector('app-channel-sidebar')).not.toBeNull();
-		expect(element.querySelector('.channel-sidebar__title')?.textContent).toContain('Каналы');
+		expect(element.querySelector('.channel-sidebar-title')?.textContent).toContain('Каналы');
 	});
 
 	it('docs показывает навигацию по компонентам', async () => {
@@ -67,6 +67,7 @@ describe('pages', () => {
 			'Icon',
 			'Loader',
 			'Modal',
+			'Tooltip',
 		]);
 	});
 

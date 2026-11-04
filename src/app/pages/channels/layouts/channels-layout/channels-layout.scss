@@ -1,0 +1,20 @@
+@use '../../styles/composition';
+
+:host {
+	display: block;
+}
+
+.channels-layout {
+	--sidebar-width: auto;
+	--gutter: 1.25rem;
+}
+
+.channels-content {
+	min-width: 0;
+}
+
+@media (max-width: 48rem) {
+	.channels-layout {
+		--gutter: 1rem;
+	}
+}

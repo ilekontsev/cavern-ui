@@ -1,0 +1,7 @@
+<div class="channels-layout with-sidebar">
+	<app-channel-sidebar [channels]="myChannels()" [loading]="loading()" [error]="error()" />
+
+	<section class="channels-content">
+		<router-outlet />
+	</section>
+</div>

@@ -1,9 +1,9 @@
 import { Component, input, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { Channel } from '../../core/channels/channel.models';
-import { ROUTE_URLS } from '../../core/routes';
-import { Icon, Loader } from '../../ui-kit';
+import { Channel } from '../../../../core/channels/channel.models';
+import { ROUTE_URLS } from '../../../../core/routes';
+import { Button, Icon, Loader, Tooltip } from '../../../../ui-kit';
 
 /**
  * Боковое меню каналов.
@@ -12,13 +12,12 @@ import { Icon, Loader } from '../../ui-kit';
  * появляется при наведении. Кнопка в шапке разворачивает меню до полного вида.
  */
 @Component({
-	imports: [Icon, Loader, RouterLink, RouterLinkActive],
+	imports: [Button, Icon, Loader, RouterLink, RouterLinkActive, Tooltip],
 	selector: 'app-channel-sidebar',
 	styleUrl: './channel-sidebar.scss',
 	templateUrl: './channel-sidebar.html',
 	host: {
-		'[class.channel-sidebar--expanded]': 'expanded()',
-		'[class.channel-sidebar--collapsed]': '!expanded()',
+		'[attr.data-expanded]': 'expanded() ? "" : null',
 	},
 })
 export class ChannelSidebar {

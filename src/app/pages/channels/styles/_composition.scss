@@ -1,0 +1,33 @@
+// Composition-слой CUBE CSS: раскладка без привязки к содержимому.
+
+.flow {
+	display: flex;
+	flex-direction: column;
+	gap: var(--flow-space, 1rem);
+}
+
+.cluster {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--cluster-space, 0.75rem);
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	gap: var(--row-space, 0.6rem);
+}
+
+.with-sidebar {
+	display: grid;
+	grid-template-columns: var(--sidebar-width, auto) minmax(0, 1fr);
+	align-items: var(--sidebar-align, start);
+	gap: var(--gutter, 1rem);
+}
+
+@media (max-width: 48rem) {
+	.with-sidebar {
+		grid-template-columns: 1fr;
+	}
+}

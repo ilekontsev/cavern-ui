@@ -1,0 +1,29 @@
+// Utility-слой CUBE CSS: одно свойство или одна задача.
+
+.u-text-muted {
+	color: var(--cavern-muted);
+}
+
+.u-text-danger {
+	color: var(--cavern-danger);
+}
+
+.u-text-accent {
+	color: var(--cavern-accent);
+}
+
+.u-truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.u-list-none {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.u-ml-auto {
+	margin-left: auto;
+}

@@ -1,0 +1,27 @@
+<app-page
+	title="Tooltip"
+	subtitle="Всплывающая подсказка при наведении и фокусе. Текст передаётся в app-tooltip."
+>
+	<app-docs-example title="На кнопке" [code]="code.button">
+		<button app-button variant="secondary" type="button" app-tooltip="Создать новый канал">
+			Наведите на меня
+		</button>
+	</app-docs-example>
+
+	<app-docs-example title="На иконке" [code]="code.icon">
+		<button
+			app-button
+			variant="neutral"
+			size="extra-small"
+			type="button"
+			aria-label="Удалить"
+			app-tooltip="Удалить"
+		>
+			<span app-icon="delete"></span>
+		</button>
+	</app-docs-example>
+
+	<app-docs-example title="Без подсказки" [code]="code.hidden">
+		<button app-button variant="secondary" type="button" [app-tooltip]="null">Подсказки нет</button>
+	</app-docs-example>
+</app-page>

@@ -6,23 +6,24 @@ import { CHANNELS_ROUTE_SEGMENTS, ROUTE_SEGMENTS, ROUTE_URLS } from '../../core/
 export const routes: Routes = [
 	{
 		path: ROUTE_SEGMENTS.root,
-		loadComponent: () => import('./channels').then((m) => m.Channels),
+		loadComponent: () =>
+			import('./layouts/channels-layout/channels-layout').then((m) => m.ChannelsLayout),
 		children: [
 			{
 				path: ROUTE_SEGMENTS.root,
-				loadComponent: () => import('./channels-home').then((m) => m.ChannelsHome),
+				loadComponent: () => import('./channels-home/channels-home').then((m) => m.ChannelsHome),
 			},
 			{
 				path: CHANNELS_ROUTE_SEGMENTS.newChannel,
-				loadComponent: () => import('./channel-create').then((m) => m.ChannelCreate),
+				loadComponent: () => import('./channel-create/channel-create').then((m) => m.ChannelCreate),
 			},
 			{
 				path: CHANNELS_ROUTE_SEGMENTS.search,
-				loadComponent: () => import('./channel-search').then((m) => m.ChannelSearch),
+				loadComponent: () => import('./channel-search/channel-search').then((m) => m.ChannelSearch),
 			},
 			{
 				path: ':id/:subchannelId',
-				loadComponent: () => import('./channel-detail').then((m) => m.ChannelDetail),
+				loadComponent: () => import('./channel-detail/channel-detail').then((m) => m.ChannelDetail),
 			},
 			{
 				// Канал всегда открывается на подканале: так при переключении

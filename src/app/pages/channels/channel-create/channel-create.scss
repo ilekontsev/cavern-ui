@@ -1,0 +1,30 @@
+@use '../styles/composition';
+@use '../styles/utilities';
+
+:host {
+	display: block;
+}
+
+.channel-create-form {
+	--flow-space: 1rem;
+
+	max-width: 32rem;
+}
+
+.channel-create-submit {
+	align-self: flex-start;
+}
+
+.channel-create-error {
+	margin: 0;
+	font-size: 0.85rem;
+}
+
+.channel-create-text {
+	margin: 0 0 1rem;
+	font-size: 0.9rem;
+}
+
+.channel-create-links {
+	--cluster-space: 0.75rem;
+}

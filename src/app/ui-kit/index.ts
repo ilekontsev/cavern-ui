@@ -9,3 +9,4 @@ export { MODAL_CLOSE, MODAL_DATA, MODAL_REF, type ModalClose } from './modal/mod
 export { ModalRef } from './modal/modal-ref';
 export { Page } from './page/page';
 export { type PortalConfig, PortalRef, PortalService } from './portal/portal.service';
+export { Tooltip } from './tooltip/tooltip';

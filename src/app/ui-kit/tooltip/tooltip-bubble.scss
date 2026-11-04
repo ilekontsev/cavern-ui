@@ -1,0 +1,25 @@
+:host {
+	position: fixed;
+	display: block;
+	width: max-content;
+	max-width: 16rem;
+	padding: 0.35rem 0.55rem;
+	border: 1px solid var(--cavern-border, #d8dde6);
+	border-radius: 0.45rem;
+	background: var(--cavern-surface, #ffffff);
+	box-shadow: 0 6px 18px rgb(0 0 0 / 18%);
+	font-size: 0.8rem;
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--cavern-text, #1a1d23);
+	white-space: normal;
+	overflow-wrap: anywhere;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-50%);
+	transition: opacity 0.12s ease;
+}
+
+:host([data-visible]) {
+	opacity: 1;
+}
