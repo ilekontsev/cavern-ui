@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Login } from './auth/login/login';
 import { Register } from './auth/register/register';
+import { Channels } from './channels/channels';
 import { Docs } from './docs/docs';
 import { Home } from './home/home';
 import { Profile } from './profile/profile';
@@ -39,6 +40,16 @@ describe('pages', () => {
 		expect((fixture.nativeElement as HTMLElement).querySelector('h1')?.textContent).toContain(
 			'Песочница'
 		);
+	});
+
+	it('channels показывает боковое меню', async () => {
+		const fixture = TestBed.createComponent(Channels);
+
+		fixture.detectChanges();
+
+		expect(
+			(fixture.nativeElement as HTMLElement).querySelector('.channels__title')?.textContent
+		).toContain('Каналы');
 	});
 
 	it('docs показывает навигацию по компонентам', async () => {

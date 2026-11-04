@@ -5,6 +5,7 @@
 export const ROUTE_SEGMENTS = {
 	root: '',
 	profile: 'profile',
+	channels: 'channels',
 	docs: 'docs',
 	sandbox: 'sandbox',
 	login: 'login',
@@ -20,6 +21,12 @@ export const DOCS_ROUTE_SEGMENTS = {
 	loader: 'loader',
 } as const;
 
+/** Сегменты вложенных маршрутов каналов. */
+export const CHANNELS_ROUTE_SEGMENTS = {
+	newChannel: 'new',
+	search: 'search',
+} as const;
+
 /**
  * Абсолютные URL для routerLink и навигации.
  * Собираются из сегментов, чтобы путь менялся в одном месте.
@@ -27,6 +34,9 @@ export const DOCS_ROUTE_SEGMENTS = {
 export const ROUTE_URLS = {
 	home: '/',
 	profile: `/${ROUTE_SEGMENTS.profile}`,
+	channels: `/${ROUTE_SEGMENTS.channels}`,
+	channelsNew: `/${ROUTE_SEGMENTS.channels}/${CHANNELS_ROUTE_SEGMENTS.newChannel}`,
+	channelsSearch: `/${ROUTE_SEGMENTS.channels}/${CHANNELS_ROUTE_SEGMENTS.search}`,
 	docs: `/${ROUTE_SEGMENTS.docs}`,
 	sandbox: `/${ROUTE_SEGMENTS.sandbox}`,
 	login: `/${ROUTE_SEGMENTS.login}`,

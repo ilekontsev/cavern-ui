@@ -1,0 +1,96 @@
+:host {
+	display: block;
+}
+
+.channel-search__form {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 0.75rem;
+	margin-bottom: 1rem;
+}
+
+.channel-search__list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.channel-search__item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem 1rem;
+	padding: 0.9rem 1rem;
+	border: 1px solid var(--cavern-border);
+	border-radius: 0.6rem;
+}
+
+.channel-search__info {
+	min-width: 0;
+}
+
+.channel-search__name {
+	margin: 0;
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: var(--cavern-text);
+}
+
+.channel-search__description {
+	margin: 0.25rem 0 0;
+	font-size: 0.875rem;
+	color: var(--cavern-muted);
+}
+
+.channel-search__meta {
+	margin: 0.35rem 0 0;
+	font-size: 0.8rem;
+	color: var(--cavern-muted);
+}
+
+.channel-search__actions {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.channel-search__badge {
+	padding: 0.25rem 0.6rem;
+	border-radius: 999px;
+	background: var(--cavern-surface-hover);
+	font-size: 0.8rem;
+	color: var(--cavern-muted);
+}
+
+.channel-search__muted {
+	margin: 0;
+	font-size: 0.9rem;
+	color: var(--cavern-muted);
+}
+
+.channel-search__error {
+	margin: 0 0 0.75rem;
+	font-size: 0.85rem;
+	color: var(--cavern-danger);
+}
+
+.channel-search__hint {
+	margin: 1rem 0 0;
+	font-size: 0.85rem;
+	color: var(--cavern-muted);
+}
+
+.channel-search__link {
+	color: var(--cavern-accent);
+}
+
+@media (max-width: 40rem) {
+	.channel-search__form {
+		grid-template-columns: 1fr;
+	}
+}

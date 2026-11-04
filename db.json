@@ -17,5 +17,19 @@
       "registeredAt": "2026-11-04T00:57:49.917Z"
     }
   ],
+  "channels": [
+    {
+      "id": "f8afad8d-9d14-4d9f-bca1-b278902094bd",
+      "name": "test",
+      "description": "",
+      "ownerId": "134a5305-0523-49aa-abc1-2cd0901ab9ff",
+      "ownerLogin": "admin2",
+      "members": [
+        "134a5305-0523-49aa-abc1-2cd0901ab9ff",
+        "vex56Iq7l38"
+      ],
+      "createdAt": "2026-11-04T01:05:24.987Z"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

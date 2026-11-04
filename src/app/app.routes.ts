@@ -11,6 +11,10 @@ export const routes: Routes = [
 		loadChildren: () => import('./pages/profile/profile.routes').then((m) => m.routes),
 	},
 	{
+		path: ROUTE_SEGMENTS.channels,
+		loadChildren: () => import('./pages/channels/channels.routes').then((m) => m.routes),
+	},
+	{
 		path: ROUTE_SEGMENTS.docs,
 		loadChildren: () => import('./pages/docs/docs.routes').then((m) => m.routes),
 	},

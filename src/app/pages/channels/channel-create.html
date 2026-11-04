@@ -1,0 +1,49 @@
+<app-page title="Новый канал" subtitle="Создайте канал и станьте его владельцем.">
+	@if (canCreate()) {
+		<app-card>
+			<form class="channel-create" (submit)="submit($event)">
+				<app-input
+					inputId="channel-name"
+					label="Название"
+					[disabled]="creating()"
+					[(value)]="name"
+				/>
+
+				<app-input
+					inputId="channel-description"
+					label="Описание"
+					description="Необязательно, до 500 символов."
+					[disabled]="creating()"
+					[(value)]="description"
+				/>
+
+				@if (error()) {
+					<p class="channel-create__error">{{ error() }}</p>
+				}
+
+				<button
+					app-button
+					class="channel-create__submit"
+					variant="primary"
+					size="medium"
+					type="submit"
+					[loading]="creating()"
+				>
+					Создать
+				</button>
+			</form>
+		</app-card>
+	} @else {
+		<app-card heading="Нужна авторизация">
+			<p class="channel-create__text">
+				Гости могут находить каналы и присоединяться к ним, но не создавать свои.
+			</p>
+			<div class="channel-create__links">
+				<a app-button variant="primary" size="medium" [routerLink]="routeUrls.login">Войти</a>
+				<a app-button variant="secondary" size="medium" [routerLink]="routeUrls.register">
+					Регистрация
+				</a>
+			</div>
+		</app-card>
+	}
+</app-page>
