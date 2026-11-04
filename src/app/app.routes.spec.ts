@@ -27,6 +27,7 @@ describe('app routes', () => {
 		ROUTE_URLS.docsInput,
 		ROUTE_URLS.docsIcon,
 		ROUTE_URLS.docsLoader,
+		ROUTE_URLS.docsModal,
 		ROUTE_URLS.login,
 		ROUTE_URLS.register,
 	];

@@ -1,0 +1,16 @@
+.modal-content__text {
+	margin: 0;
+}
+
+.modal-content__meta {
+	margin: 0.5rem 0 0;
+	color: var(--cavern-muted);
+	font-size: 0.875rem;
+}
+
+.modal-content__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 1rem;
+}

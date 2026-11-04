@@ -1,0 +1,11 @@
+<p class="modal-content__text">{{ data.message }}</p>
+<p class="modal-content__meta">ModalRef #{{ modalRef.id }}</p>
+
+<div class="modal-content__actions">
+	<button app-button variant="secondary" type="button" (click)="close()">
+		Закрыть через MODAL_CLOSE
+	</button>
+	<button app-button type="button" (click)="modalRef.close('Результат из ModalRef')">
+		Закрыть через ModalRef
+	</button>
+</div>

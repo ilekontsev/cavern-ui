@@ -19,6 +19,7 @@ export const DOCS_ROUTE_SEGMENTS = {
 	input: 'input',
 	icon: 'icon',
 	loader: 'loader',
+	modal: 'modal',
 } as const;
 
 /** Сегменты вложенных маршрутов каналов. */
@@ -45,4 +46,5 @@ export const ROUTE_URLS = {
 	docsInput: `/${ROUTE_SEGMENTS.docs}/${DOCS_ROUTE_SEGMENTS.input}`,
 	docsIcon: `/${ROUTE_SEGMENTS.docs}/${DOCS_ROUTE_SEGMENTS.icon}`,
 	docsLoader: `/${ROUTE_SEGMENTS.docs}/${DOCS_ROUTE_SEGMENTS.loader}`,
+	docsModal: `/${ROUTE_SEGMENTS.docs}/${DOCS_ROUTE_SEGMENTS.modal}`,
 } as const;

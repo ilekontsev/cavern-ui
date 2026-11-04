@@ -1,0 +1,31 @@
+<app-page
+	title="Modal"
+	subtitle="Модальное окно, декларативное открытие и динамический контент через сервис."
+>
+	<app-docs-example title="Декларативное окно" [code]="code.declarative">
+		<button app-button type="button" (click)="isOpen.set(true)">Открыть окно</button>
+
+		<app-modal [(open)]="isOpen" title="Простое модальное окно">
+			<p class="docs-modal__text">Окно управляется двусторонней привязкой <code>[(open)]</code>.</p>
+
+			<div class="docs-modal__actions">
+				<button app-button type="button" (click)="isOpen.set(false)">Понятно</button>
+			</div>
+		</app-modal>
+	</app-docs-example>
+
+	<app-docs-example title="Контент через ModalService" [code]="code.service" column>
+		<button app-button type="button" (click)="openFromService()">Открыть из ModalService</button>
+
+		@if (result()) {
+			<p class="docs-modal__result">Результат: {{ result() }}</p>
+		}
+	</app-docs-example>
+
+	<app-docs-example title="Токены внутри контента" [code]="code.content" column>
+		<p class="docs-modal__text">
+			<code>MODAL_DATA</code> передаёт данные, <code>MODAL_REF</code> даёт ссылку на окно, а
+			<code>MODAL_CLOSE</code> — функцию закрытия.
+		</p>
+	</app-docs-example>
+</app-page>

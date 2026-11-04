@@ -27,6 +27,10 @@ export const routes: Routes = [
 				path: DOCS_ROUTE_SEGMENTS.loader,
 				loadComponent: () => import('./loader/loader').then((m) => m.DocsLoader),
 			},
+			{
+				path: DOCS_ROUTE_SEGMENTS.modal,
+				loadComponent: () => import('./modal/modal').then((m) => m.DocsModal),
+			},
 		],
 	},
 ];

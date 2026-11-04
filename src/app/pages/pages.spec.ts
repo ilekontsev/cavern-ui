@@ -62,6 +62,7 @@ describe('pages', () => {
 			'Input',
 			'Icon',
 			'Loader',
+			'Modal',
 		]);
 	});
 

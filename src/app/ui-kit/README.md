@@ -56,7 +56,15 @@ Fallback-значения — светлая схема, то есть пове�
 | `Icon`    | `app-icon`   | Иконка-директива по названию из Material Symbols Rounded  |
 | `Input`   | `app-input`  | Текстовое поле с плавающей подписью, описанием и ошибками |
 | `Loader`  | `app-loader` | Индикатор загрузки с настраиваемым размером и цветом      |
+| `Modal`   | `app-modal`  | Модальное окно на нативном `<dialog>`                     |
 | `Page`    | `app-page`   | Каркас страницы: заголовок, подзаголовок, контент         |
+
+Сервисы:
+
+| Сервис          | Назначение                                                          |
+| --------------- | ------------------------------------------------------------------- |
+| `ModalService`  | Открытие модальных окон с динамическим контентом                    |
+| `PortalService` | Динамическое создание оверлеев в корне документа с учётом `z-index` |
 
 ## Иконки
 
@@ -186,6 +194,70 @@ import { Icon } from '../../ui-kit';
 <app-input label="Поиск" iconEnd="search" loading />
 ```
 
+## Модальное окно
+
+`Modal` построен на нативном `<dialog>`: браузер сам управляет фокусом, слоем
+поверх страницы и закрытием по Escape. Видимость задаётся двусторонней
+привязкой `open`, заголовок — инпутом `title` (необязательный).
+
+```html
+<app-modal [(open)]="isOpen" title="Подтверждение">
+	<p>Удалить канал без возможности восстановления?</p>
+
+	<div class="actions">
+		<button app-button variant="secondary" type="button" (click)="isOpen.set(false)">Отмена</button>
+		<button app-button type="button" (click)="remove()">Удалить</button>
+	</div>
+</app-modal>
+```
+
+Если заголовка нет, кнопка закрытия не выводится. Клик по подложке и Escape
+закрывают окно и сбрасывают `open` в `false`.
+
+### Сервис модальных окон
+
+`ModalService` создаёт окно в корне документа и монтирует в него динамический
+компонент. Сервис принимает инжектор компонента, из которого открывается окно,
+поэтому контент получает провайдеры родителя.
+
+```ts
+const modalRef = this.modalService.open<string, { id: number }>(ModalContent, {
+	title: 'Настройки',
+	data: { id: 1 },
+	injector: this.injector,
+});
+
+modalRef.afterClosed.then((result) => console.log(result));
+```
+
+Внутри динамического компонента доступны токены:
+
+- `MODAL_DATA` — данные, переданные в `open()`;
+- `MODAL_REF` — `ModalRef` с `id`, `data`, `close()` и `afterClosed`;
+- `MODAL_CLOSE` — функция закрытия текущего окна.
+
+```ts
+export class ModalContent {
+	protected readonly data = inject(MODAL_DATA) as { id: number };
+	protected readonly modalRef = inject(MODAL_REF);
+	protected readonly close = inject(MODAL_CLOSE);
+}
+```
+
+### Порталы
+
+`PortalService` — основа `ModalService` и будущих поповеров, дропдаунов и
+тултипов. Он создаёт контейнер в `document.body`, монтирует в него компонент и
+выдаёт каждому порталу следующий `z-index`.
+
+```ts
+const portal = this.portalService.create(MyOverlay, {
+	injector: this.injector,
+});
+
+portal.close();
+```
+
 ## Общие стили полей
 
 Каркас текстовых полей (рамка, плавающая подпись, состояния, слоты) лежит в
@@ -195,7 +267,7 @@ import { Icon } from '../../ui-kit';
 ## Использование
 
 ```ts
-import { Card, Input, Loader, Page } from '../../ui-kit';
+import { Card, Input, Loader, Modal, Page } from '../../ui-kit';
 ```
 
 Импорт всегда через `index.ts`, а не через пути к отдельным файлам.
